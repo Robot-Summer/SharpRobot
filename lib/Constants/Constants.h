@@ -24,4 +24,11 @@ namespace GyroscopeNS {
 
 }
 
+//IR sensor Name Space
+namespace IRNS {
+    const int KHZ_WAVE = PA1;
+
+    const int KHZ_WAVE_THRESHOLD = 300;
+}
+
 #endif
