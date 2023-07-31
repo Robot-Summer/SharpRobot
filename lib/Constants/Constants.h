@@ -26,7 +26,7 @@ namespace PIDNS {
     const int MAX_ANGLE = 148;
     const int MIN_ANGLE = 52;
     const int INITIAL_ANGLE = 100;
-    const int SERVO_PIN = PA0;
+    static const PinName SERVO_PIN = PA_0;
 
     // PID Constants
     const float KP = 12.0;

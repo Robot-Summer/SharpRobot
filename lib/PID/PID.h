@@ -5,7 +5,6 @@
 #include <Servo.h>
 #include <Constants.h>
 #include <Motor.h>
-#include <Servo.h>
 
 class PID {
     public:

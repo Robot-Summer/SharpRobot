@@ -7,6 +7,7 @@
 #include <Helper.h>
 #include <Master.h>
 #include <PID.h>
+#include <MyLED.h>
 
 HardwareSerial Serial3(PB11, PB10);
 
@@ -17,12 +18,16 @@ HardwareSerial Serial3(PB11, PB10);
 // #define OLED_RESET  -1 // This display does not have a reset pin accessible
 // Adafruit_SSD1306 display_handler(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-//IR ir;
+// IR ir;
 // float waveform[IRNS::NUM_READINGS];
 
  
 int count = 0;
-Master state;
+// Master state;
+
+PID help;
+
+MyLED hello(PC13);
 
 void setup() {
     Serial3.begin(9600);
@@ -42,7 +47,9 @@ void setup() {
     // display_handler.println("hello world");
     // display_handler.display();
 
-    state.setState(MasterState::DRV_TAPE);
+    // state.setState(MasterState::DRV_TAPE);
+
+    pinMode(PC13, OUTPUT);  
 
 }
 
@@ -70,9 +77,13 @@ void loop() {
 
     // display_handler.display();
 
-    Serial3.println(count);
+    digitalWrite(PC13, !digitalRead(PC13));
+    delay(500);
 
-    state.poll();
+    Serial3.println(count);
+    // state.poll();
+
+    // help.usePID();
     count++;
 
 }

@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <Constants.h>
-#include <Motor.h>
+// #include <Motor.h>
 #include <Servo.h>
 
 #include <PID.h>
@@ -12,12 +12,20 @@ PID::PID() :
     lastState(0),
     timeInCurrent(0),
     timeInPrev(0),
-    integral(0),
-    lastError(0) {
+    integral(0.0F),
+    lastError(0) 
+    {
 
-    myServo.attach(PIDNS::SERVO_PIN);
+    pinMode(PIDNS::SERVO_PIN, OUTPUT);
 
-    Serial3.print("in construct");
+    myServo.attach(PA0);
+
+    pinMode(MotorNS::LEFT_MOTOR_BWD, OUTPUT);
+    pinMode(MotorNS::LEFT_MOTOR_FWD, OUTPUT);
+
+    pinMode(MotorNS::RIGHT_MOTOR_FWD, OUTPUT);
+    pinMode(MotorNS::RIGHT_MOTOR_BWD, OUTPUT);
+
 
 }
 
