@@ -6,16 +6,41 @@
 //TODO: Make a namespace for each library and declare all constants for the library (stm32 pins)
 
 //Motors Name Space
-namespace MotorsNS {
+namespace MotorNS {
 
-    //Example:
-    const int RIGHT_MOTOR = PA1;
-    const int LEFT_MOTOR = PA2;
+    static const PinName RIGHT_MOTOR_FWD = PA_6;
+    static const PinName RIGHT_MOTOR_BWD = PA_7;
+    static const PinName LEFT_MOTOR_FWD = PA_9;
+    static const PinName LEFT_MOTOR_BWD = PA_8;
+
+    const int MOTOR_FREQ = 1000;
+
+    const int MAX_SPEED = 170;
+
 }
 
 
 //Reflectance Sensors Name Space
-namespace ReflectanceSensorsNS {
+namespace PIDNS {
+    // Servo Constants
+    const int MAX_ANGLE = 148;
+    const int MIN_ANGLE = 52;
+    const int INITIAL_ANGLE = 100;
+    const int SERVO_PIN = PA0;
+
+    // PID Constants
+    const float KP = 12.0;
+    const float KD = 0.00;  
+    const float KI = 0.001; 
+
+    const int DIGITAL_THRESHOLD = 150;
+
+
+    // Reflectance sensors PINS
+    const int LEFT_SENSOR_ONE = PA5;
+    const int LEFT_SENSOR_TWO = PA4;
+    const int RIGHT_SENSOR_ONE = PB0;
+    const int RIGHT_SENSOR_TWO = PB1;
 
 }
 
@@ -26,11 +51,15 @@ namespace GyroscopeNS {
 
 //IR sensor Name Space
 namespace IRNS {
-    const int KHZ_WAVE_PIN = PA6;
-    //const int KHZ_WAVE_THRESHOLD = 300;
-    const int NUM_WAVES = 10;
+    //TODO: Tune the IR to read as best as possible
 
-    const int SAMPLING_FREQUENCY = 5000;
+    const int KHZ_WAVE_PIN = PA3;
+
+    const int CORROLATED_WAVE_THRESHOLD = .05; //corrolation threshold
+
+    const int NUM_WAVES = 15; //higher the cycles the more readings
+
+    const int SAMPLING_FREQUENCY = 5000; //keep the sampling frequency to at least twice the read wave. (2000 =<)
 
     const int NUM_READINGS = NUM_WAVES  * SAMPLING_FREQUENCY / 1000;
 

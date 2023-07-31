@@ -2,46 +2,59 @@
 
 #include <IR.h>
 #include <PID.h>
-#include <Motors.h>
+#include <Motor.h>
 #include <Constants.h>
 #include <Gyroscope.h>
 
 #include <Master.h>
 
-namespace Master {
+//namespace Master {
+
     MasterState Master::poll() {
         
         switch(currentState){
 
-            case MasterState::INACTIVE://might not need it depending if we have a switch or not
-            //TODO: add the code for when it is inactive
+            case MasterState::IDLE:
+                //TODO: write code for the switch (maybe debouncing needed)
+                if (true) {//change the part inside the if statment
+                    advanceState();
+                } else {
+                    stop();
+                }
+                
+                break;
 
-            advanceState();
-            break;
+            case MasterState::DRV_TAPE:  
+                tapeFollow.usePID();
+                break;
 
-            case MasterState::IR_SAMPLING:
-            //TODO: add the code for when ir is sampling
+            case MasterState::DRV_IR:
+                //TODO: add the code for when ir is sampling
 
-            advanceState();
-            break;
+                float waveform[IRNS::NUM_READINGS];
+                ir.waveformSample(waveform);
+                ir.maxCorrelationOneK(waveform);
 
-            case MasterState::IR_WAITING:
-            //TODO: add the code for when it is inactive
+                advanceState();
+                break;
 
-            advanceState();
-            break;
+            case MasterState::SHRP_TURN:
+                //TODO: add the code for when ir is sampling
 
-            case MasterState::IR_PROCCESSING:
-            //TODO: add the code for when ir is proccessing
+                advanceState();
+                break;
 
-            advanceState();
-            break;
+            case MasterState::OTHR_RBT:
+                //TODO: add the code for when ir is sampling
+                break;
 
-            case MasterState::DONE:
-            //TODO: add the code for when it is done
-            
-            stop();
-            break;
+            case MasterState::DRP_BAN:
+                //TODO: add the code for when ir is sampling
+                break;
+
+            case MasterState::DONE:                
+                stop();
+                break;
 
         }
 
@@ -65,7 +78,8 @@ namespace Master {
     }
 
     void Master::stop() {
-        if (stopped){ 
+        if (stopped){ //add the code to stop the motors. 
+
             return;
         }
         stopped = true;
@@ -73,4 +87,4 @@ namespace Master {
 
 
 
-}
+//}

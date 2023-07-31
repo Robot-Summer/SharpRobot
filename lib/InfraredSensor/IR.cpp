@@ -5,53 +5,45 @@
 
 #include <IR.h>
 
-float IR::maxCorrelationOneK(float* waveform){
-    float onek[IRNS::NUM_READINGS];
-    float correlation = 0.0;
+//TODO: Erase all unneccesary comments and comment for clarity
 
+
+float IR::maxCorrelationOneK(float waveform[]) {
+    //average of the sampled wave
+    float waveformAverage = 0;
+    for (int i = 0; i < IRNS::NUM_READINGS; i++) {
+        waveformAverage += waveform[i];
+    }
+    waveformAverage /= IRNS::NUM_READINGS;
+
+    float onek[IRNS::NUM_READINGS];
 
     //generates a normalized reference wave
     for (int i = 0; i < IRNS::NUM_READINGS; i++) {
-        onek[i] = 0.5 * sin(2 * PI * ((double) IRNS::NUM_WAVES / IRNS::NUM_READINGS) * i) + 0.5;
+        onek[i] = .5 * sin(2 * PI * ((float) IRNS::NUM_WAVES / IRNS::NUM_READINGS) * i);
+        waveform[i] -= waveformAverage; //centers the waveform around 0
     }
 
-    // Calculate the cross-correlation
-    for (int k = 0; k < IRNS::NUM_READINGS; k++) {
+    float correlation = 0.0;
+    for (int shift = 0; shift < IRNS::NUM_READINGS; shift++) {
         float sum = 0.0;
-        for (int i = 0; i < IRNS::NUM_READINGS; i++) {
-            // sum += (reference[i] - referenceMean) * (measured[i + k] - referenceMean);
-            sum += (waveform[i]) * (onek[i + k]); //without normalization
+        for (int i = 0; i + shift < IRNS::NUM_READINGS; i++) {
+            sum += ( waveform[i]) * ( onek[shift] ); 
         }
-        correlation = fmax(correlation, sum);
+        correlation = fmax ( correlation, sum );
     }
-
-    // Normalize the correlation coefficient
-    // correlation /= (IRNS::NUM_READINGS * referenceStdDev * referenceStdDev);
 
     return correlation;
 }
 
-
-unsigned long IR::waveformSample(float* waveform, int sampleIndex) {
+unsigned long IR::waveformSample(float* waveform) {
     unsigned long start = micros();
-    waveform[sampleIndex] = analogRead(IRNS::KHZ_WAVE_PIN);
+    
+    //samples a wave and normalilzes it
+    for (int i = 0; i < IRNS::NUM_READINGS; i++){
+        waveform[i] = analogRead(IRNS::KHZ_WAVE_PIN) / (float) 1024;
+        delayMicroseconds(1000000 / IRNS::SAMPLING_FREQUENCY);
+    }
+
     return micros() - start;
 }
-
-
-    // Calculate the mean of the reference and measured waveforms
-
-    // Pre-calculate the mean of the reference waveform
-    // float referenceMean = 0.0;
-    // for (int i = 0; i < IRNS::NUM_READINGS; i++) {
-    //     referenceMean += reference[i];
-    // }
-    // referenceMean /= IRNS::NUM_READINGS;
-
-    // Calculate the standard deviation of the reference waveform
-    // float referenceStdDev = 0.0;
-    // for (int i = 0; i < IRNS::NUM_READINGS; i++) {
-    //     float diff = reference[i] - referenceMean;
-    //     referenceStdDev += diff * diff;
-    // }
-    // referenceStdDev = sqrt(referenceStdDev / IRNS::NUM_READINGS);

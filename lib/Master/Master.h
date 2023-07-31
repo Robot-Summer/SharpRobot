@@ -2,20 +2,26 @@
 #define Master_h
 
 #include <Arduino.h>
+#include <Servo.h>
+#include <Wire.h>
+
+
 #include <IR.h>
 #include <PID.h>
-#include <Motors.h>
+#include <Motor.h>
 #include <Constants.h>
 #include <Gyroscope.h>
 
-namespace Master {
+//namespace Master {
 
     //States
     enum class MasterState { //TODO: change as needed
-        INACTIVE,
-        IR_SAMPLING,
-        IR_WAITING,
-        IR_PROCCESSING,
+        IDLE,
+        DRV_IR,
+        DRV_TAPE,
+        SHRP_TURN,
+        OTHR_RBT,
+        DRP_BAN,
         DONE
     };
 
@@ -23,9 +29,16 @@ namespace Master {
         public:
 
             /**
-             * returns current state of the robot.
+             * masterstate pole
+             * 
+             * @return the current state of the robot.
             */
             MasterState poll();
+
+            /**
+             * Set the state. ONLY FOR DEBUGGING. Do not use on competition day
+            */
+            void setState(MasterState state) { this -> currentState = state; }
 
         private: 
 
@@ -55,10 +68,10 @@ namespace Master {
             MasterState currentState;
             bool stopped;
             IR ir;
+            PID tapeFollow;
 
     };
 
-}//master namespace
-
+//}//master namespace
 
 #endif
