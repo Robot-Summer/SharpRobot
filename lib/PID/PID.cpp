@@ -1,14 +1,12 @@
 #include <Arduino.h>
 #include <Constants.h>
 // #include <Motor.h>
-#include <Servo.h>
 
 #include <PID.h>
 
 //TODO: implement the motor class
 PID::PID() : 
     servoAngle(PIDNS::INITIAL_ANGLE),
-    initialAngle(0),
     lastState(0),
     timeInCurrent(0),
     timeInPrev(0),
@@ -17,8 +15,6 @@ PID::PID() :
     {
 
     pinMode(PIDNS::SERVO_PIN, OUTPUT);
-
-    myServo.attach(PA0);
 
     pinMode(MotorNS::LEFT_MOTOR_BWD, OUTPUT);
     pinMode(MotorNS::LEFT_MOTOR_FWD, OUTPUT);
@@ -83,6 +79,11 @@ int PID::getDigital(int value) {
     }
 }
 
+void PID::writeServoAngle(int angle) {
+    int pwmSignal = angle * 11;
+    pwm_start(PIDNS::SERVO_PIN, 50, pwmSignal, TimerCompareFormat_t::MICROSEC_COMPARE_FORMAT);
+}
+
 void PID::usePID() {
 
     int l1d = getDigital(analogRead(PIDNS::LEFT_SENSOR_ONE));
@@ -114,11 +115,11 @@ void PID::usePID() {
     // Compute Servo adjustment, positive means robot drifiting to the left, negative means robot drifiting to the right
     float adjustment = PIDNS::KP * currentState + PIDNS::KD * derivative + PIDNS::KI * integral; 
 
-    servoAngle = initialAngle + adjustment;  
+    servoAngle = PIDNS::INITIAL_ANGLE + adjustment;  
     servoAngle = limitAngle(servoAngle);
-    myServo.write(servoAngle);  
-    lastState = currentState;
+    writeServoAngle(servoAngle);
 
+    lastState = currentState;
 
     if (currentState == 4) {
         pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);

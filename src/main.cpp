@@ -1,13 +1,11 @@
 #include <Arduino.h>
 #include <Wire.h>
-#include <Servo.h>
 
 #include <Constants.h>
 #include <IR.h>
 #include <Helper.h>
 #include <Master.h>
 #include <PID.h>
-#include <MyLED.h>
 
 HardwareSerial Serial3(PB11, PB10);
 
@@ -22,12 +20,9 @@ HardwareSerial Serial3(PB11, PB10);
 // float waveform[IRNS::NUM_READINGS];
 
  
-int count = 0;
-// Master state;
+Master state;
 
-PID help;
-
-MyLED hello(PC13);
+// PID help;
 
 void setup() {
     Serial3.begin(9600);
@@ -47,9 +42,7 @@ void setup() {
     // display_handler.println("hello world");
     // display_handler.display();
 
-    // state.setState(MasterState::DRV_TAPE);
-
-    pinMode(PC13, OUTPUT);  
+    state.setState(MasterState::DRV_TAPE);
 
 }
 
@@ -77,13 +70,14 @@ void loop() {
 
     // display_handler.display();
 
-    digitalWrite(PC13, !digitalRead(PC13));
-    delay(500);
+    // digitalWrite(PC13, !digitalRead(PC13));
+    //delay(500);
 
-    Serial3.println(count);
-    // state.poll();
+    state.poll();
 
     // help.usePID();
-    count++;
+
+    // myservo.writeAngle(100);
+
 
 }

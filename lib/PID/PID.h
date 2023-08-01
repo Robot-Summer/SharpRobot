@@ -2,7 +2,6 @@
 #define PID_h
 
 #include <Arduino.h>
-#include <Servo.h>
 #include <Constants.h>
 #include <Motor.h>
 
@@ -53,15 +52,19 @@ class PID {
         */
         int getDigital(int value);
 
-        // class inits and other variables.
+        /**
+         * writes the angle of the servo
+         * 
+         * @param angle the angle we want the servo to turn. 
+        */
+        void writeServoAngle(int angle);
 
-        Servo myServo;
+        // class inits and other variables.
 
         // Motor leftMotor(MotorNS::LEFT_MOTOR_FWD, MotorNS::LEFT_MOTOR_BWD);
         // Motor rightMotor(MotorNS::RIGHT_MOTOR_FWD, MotorNS::RIGHT_MOTOR_BWD);
 
         int servoAngle;
-        int initialAngle;
         int lastState;
         int timeInCurrent;
         int timeInPrev;

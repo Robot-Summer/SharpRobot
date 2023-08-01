@@ -9,7 +9,7 @@
 namespace MotorNS {
 
     static const PinName RIGHT_MOTOR_FWD = PA_6;
-    static const PinName RIGHT_MOTOR_BWD = PA_7;
+    static const PinName RIGHT_MOTOR_BWD = PA_10;
     static const PinName LEFT_MOTOR_FWD = PA_9;
     static const PinName LEFT_MOTOR_BWD = PA_8;
 
@@ -23,9 +23,9 @@ namespace MotorNS {
 //Reflectance Sensors Name Space
 namespace PIDNS {
     // Servo Constants
-    const int MAX_ANGLE = 148;
-    const int MIN_ANGLE = 52;
-    const int INITIAL_ANGLE = 100;
+    const int MAX_ANGLE = 183;
+    const int MIN_ANGLE = 90;
+    const int INITIAL_ANGLE = 135;
     static const PinName SERVO_PIN = PA_0;
 
     // PID Constants
