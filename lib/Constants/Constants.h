@@ -46,6 +46,10 @@ namespace PIDNS {
 
 //Gyroscope Name Space
 namespace GyroscopeNS {
+    const int MPU_ADDR=0x68;
+    const int MIN_VAL=265;
+    const int MAX_VAL=402;
+
 
 }
 
