@@ -4,43 +4,57 @@
 #include <Arduino.h>
 
 class Gyro {
-    /** 
-     * Gyro class constructor
-     * 
-    */
-    Gyro();
+    
 
 
     public:
 
-    /** 
-     * gets the angle with respect to x axis
-     * 
-     * @return integer value between 0 to 360 degrees
-    */
+        /** 
+         * Gyro class constructor
+         * 
+        */
+        Gyro();
 
-   float getXAngle();
+        /** 
+         * gets the angle with respect to x axis
+         * 
+         * @return integer value between 0 to 360 degrees
+        */
 
-   /** 
-     * gets the angle with respect to y axis
-     * 
-     * @return integer value between 0 to 360 degrees
-    */
+        float getXAngle();
 
-   float getYAngle();
+        /** 
+         * gets the angle with respect to y axis
+         * 
+         * @return integer value between 0 to 360 degrees
+        */
 
-   /** 
-     * gets the angle with respect to z axis
-     * 
-     * @return integer value between 0 to 360 degrees
-    */
+        float getYAngle();
 
-   float getZAngle();
+        /** 
+         * gets the angle with respect to z axis
+         * 
+         * @return integer value between 0 to 360 degrees
+        */
+
+        float getZAngle();
+
+        /** 
+         * Reads and combines bytes received 
+         * from the I2C communication.
+        */
+        void readWire();
+
+        /** 
+         * Begins transmission of signal with the gyroscope
+        */
+
+        void beginTransmission();
 
 
-   int16_t AcX,AcY,AcZ,Tmp,GyX,GyY,GyZ;
+        int16_t AcX,AcY,AcZ,GyX,GyY,GyZ;
 
-
+    private:
 
     
 };

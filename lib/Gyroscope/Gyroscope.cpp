@@ -4,24 +4,13 @@
 #include <Helper.h>
 #include <Wire.h>
 
-Gyro::Gyro(): 
-    AcX(0),
-    AcY(0),
-    AcZ(0),
-    Tmp(0),
-    GyX(0),
-    GyY(0),
-    GyZ(0)
-{
+Gyro::Gyro()
+{    
     Wire.begin();
     Wire.beginTransmission(GyroscopeNS::MPU_ADDR);
     Wire.write(0x6B);
     Wire.write(0);
     Wire.endTransmission(true);
-    Wire.beginTransmission(GyroscopeNS::MPU_ADDR);
-    Wire.write(0x3B);
-    Wire.endTransmission(false);
-    Wire.requestFrom(GyroscopeNS::MPU_ADDR,14,true);
 }
 
 float Gyro::getXAngle(){
@@ -47,6 +36,21 @@ float Gyro::getZAngle(){
     float z = RAD_TO_DEG * (atan2(-yAng, -xAng)+PI);
 
     return z;
+}
+
+
+void Gyro::readWire(){
+    AcX=Wire.read()<<8|Wire.read();
+    AcY=Wire.read()<<8|Wire.read();
+    AcZ=Wire.read()<<8|Wire.read();
+}
+
+
+void Gyro::beginTransmission(){
+    Wire.beginTransmission(GyroscopeNS::MPU_ADDR);  //initiates a communication transmission to the gyroscope sensor. It informs the sensor that the Arduino wants to read or write data to/from it.
+    Wire.write(0x3B); //writes a single byte (0x3B) to the gyroscope sensor.
+    Wire.endTransmission(false); //ends the transmission to the gyroscope sensor, but the false parameter indicates that the Arduino does not send a stop signal on the I2C bus.
+    Wire.requestFrom(GyroscopeNS::MPU_ADDR,14,true); //requests 14 bytes of data from the gyroscope sensor with the address specified. Because of "true", Arduino stops the signal after transition.
 }
 
 
