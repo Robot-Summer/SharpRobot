@@ -118,26 +118,26 @@ void PID::usePID() {
     servoAngle = PIDNS::INITIAL_ANGLE + adjustment;  
     servoAngle = limitAngle(servoAngle);
     writeServoAngle(servoAngle);
-
+    
     lastState = currentState;
 
     if (currentState == 4) {
         pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
         pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED + 20, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED + 20, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED, RESOLUTION_8B_COMPARE_FORMAT);
     }
     else if (currentState == -4 ) {
         pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
         pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED + 20, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED + 20, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED, RESOLUTION_8B_COMPARE_FORMAT);
     }
     else {
         pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
         pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED - 20 + adjustment, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED - 20+ adjustment, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED - 40 + adjustment, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED - 40 + adjustment, RESOLUTION_8B_COMPARE_FORMAT);
     }
     
 
