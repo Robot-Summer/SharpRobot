@@ -21,6 +21,14 @@ namespace MotorNS {
 
 }
 
+namespace ServoNS {
+    const int MAX_ANGLE = 138;
+    const int MIN_ANGLE = 52;
+    const int INITIAL_ANGLE = 95;
+    
+    static const PinName SERVO_PIN = PA_0;
+}
+
 
 //Reflectance Sensors Name Space
 namespace PIDNS {

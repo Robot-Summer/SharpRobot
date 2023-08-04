@@ -7,7 +7,7 @@
 #include <PID.h>
 
 //TODO: implement the motor class
-PID::PID(Reflectors* sensors, Motor* leftMotor, Motor* rightMotor) : 
+PID::PID(Reflectors* sensors, Motor* leftMotor, Motor* rightMotor, MyServo* steeringServo) : 
     servoAngle(PIDNS::INITIAL_ANGLE),
     lastState(0),
     timeInCurrent(0),
@@ -16,7 +16,8 @@ PID::PID(Reflectors* sensors, Motor* leftMotor, Motor* rightMotor) :
     lastError(0),
     reflectors(sensors),
     leftMotor(leftMotor),
-    rightMotor(rightMotor)
+    rightMotor(rightMotor),
+    steeringServo(steeringServo)
     {
     
     //servo pin declarations
@@ -57,23 +58,6 @@ int PID::getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int r
     return state;
 }
 
-
-int PID::limitAngle(int angle) {
-    if (angle > PIDNS::MAX_ANGLE){
-        return PIDNS::MAX_ANGLE;
-    }
-
-    if (angle < PIDNS::MIN_ANGLE){
-        return PIDNS::MIN_ANGLE;
-    }
-    return angle;
-}
-
-void PID::writeServoAngle(int angle) {
-    int pwmSignal = angle * 11;
-    pwm_start(PIDNS::SERVO_PIN, 50, pwmSignal, TimerCompareFormat_t::MICROSEC_COMPARE_FORMAT);
-}
-
 void PID::usePID(int speed) {
 
     // Get Line position (positive => drifiting right ; negative => drifiting left)
@@ -103,9 +87,7 @@ void PID::usePID(int speed) {
     // Compute Servo adjustment, positive means robot drifiting to the left, negative means robot drifiting to the right
     float adjustment = PIDNS::KP * currentState + PIDNS::KD * derivative + PIDNS::KI * integral; 
 
-    servoAngle = PIDNS::INITIAL_ANGLE + adjustment;  
-    servoAngle = limitAngle(servoAngle);
-    writeServoAngle(servoAngle);
+    steeringServo -> write(ServoNS::INITIAL_ANGLE + adjustment);
 
     lastState = currentState;
 

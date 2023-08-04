@@ -3,8 +3,10 @@
 
 #include <Arduino.h>
 #include <Constants.h>
+
 #include <Motor.h>
 #include <ReflectorSensors.h>
+#include <MyServo.h>
 
 class PID {
     public:
@@ -16,7 +18,7 @@ class PID {
          * @param leftMotor a pointer to the left motor that will be used.
          * @param rightMotor a pointer to the right motor that will be used.
         */
-        PID(Reflectors* sensors, Motor* leftMotor, Motor* rightMotor);
+        PID(Reflectors* sensors, Motor* leftMotor, Motor* rightMotor, MyServo* steeringServo);
 
         /**
          * usePID makes the servos turn
@@ -58,9 +60,6 @@ class PID {
 
         // class inits and other variables.
 
-        // Motor leftMotor(MotorNS::LEFT_MOTOR_FWD, MotorNS::LEFT_MOTOR_BWD);
-        // Motor rightMotor(MotorNS::RIGHT_MOTOR_FWD, MotorNS::RIGHT_MOTOR_BWD);
-
         int servoAngle;
         int lastState;
         int timeInCurrent;
@@ -74,6 +73,7 @@ class PID {
         Reflectors* reflectors;
         Motor* leftMotor;
         Motor* rightMotor;
+        MyServo* steeringServo;
         
 };
 

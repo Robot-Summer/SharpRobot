@@ -10,7 +10,8 @@
 #include <PID.h>
 #include <Motor.h>
 #include <Constants.h>
-#include <Gyroscope.h>
+#include <ReflectorSensors.h>
+#include <MyServo.h>
 
 //States
 enum class MasterState { //TODO: change as needed
@@ -33,12 +34,14 @@ class Master {
          * @param refl a pointer to the reflectors that will be used.
          * @param leftMotor a pointer to the left motor that will be used.
          * @param rightMotor a pointer to the right motor that will be used.
+         * @param steeringServo a pointer to the steering servo that will be used.
         */
-        Master(Reflectors* refl, Motor* leftMotor, Motor* rightMotor) : 
+        Master(Reflectors* refl, Motor* leftMotor, Motor* rightMotor, MyServo* steeringServo) : 
                 preMarker(false), prePreMarker(false), 
                 secondMarker(false), reflectors(refl), 
-                tapeFollow(refl, leftMotor, rightMotor),
-                leftMotor(leftMotor), rightMotor(rightMotor) {};
+                tapeFollow(refl, leftMotor, rightMotor, steeringServo),
+                leftMotor(leftMotor), rightMotor(rightMotor),
+                steeringServo(steeringServo) {};
 
         /**
          * masterstate pole
@@ -78,10 +81,12 @@ class Master {
         //TODO add all other variables and class instances as this master class will be called at the beggining of the run.
     
         MasterState currentState;
-        
+
         Reflectors* reflectors;
         Motor* leftMotor;
         Motor* rightMotor;
+        MyServo* steeringServo;
+
 
         IR ir;
         PID tapeFollow;
