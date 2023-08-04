@@ -47,15 +47,6 @@ class PID {
         */
         int limitAngle(int angle);
 
-        // /**
-        //  * converts the analog signal from the reflectance sensors to a digital reading
-        //  * 
-        //  * @param value the reading from the sensor (0 - 1023)
-        //  * 
-        //  * @return an integer of either 0 or 1. 0 if the value is equal to or below the specified threshold in constants or 1 if above. 
-        // */
-        // int getDigital(int value);
-
         /**
          * writes the angle of the servo
          * 

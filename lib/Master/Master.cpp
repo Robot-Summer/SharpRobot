@@ -28,8 +28,6 @@ MasterState Master::poll() {
 
             tapeFollow.usePID(MotorNS::MAX_SPEED);
 
-            
-
             // reflectors.printValues();
 
             if (!previousMarker) { //check if robot was previously not on a marker            
@@ -55,15 +53,13 @@ MasterState Master::poll() {
             tapeFollow.usePID(MotorNS::DOWN_RAMP_SPEED);
 
             if (millis() - rampTimer >= TimerNS::RAMP_TIMER) {
-                goToState(MasterState::DRV_TAPE_NORM);
+                goToState(MasterState::SHRP_TURN);
             }
 
             break;
 
         case MasterState::SHRP_TURN:
-            //TODO: add the code for when ir is sampling
-
-            advanceState();
+            goToState(MasterState::DRV_TAPE_NORM);
             break;
 
         case MasterState::OTHR_RBT:

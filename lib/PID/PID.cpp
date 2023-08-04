@@ -131,7 +131,4 @@ void PID::usePID(int speed) {
         pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, speed + adjustment, RESOLUTION_8B_COMPARE_FORMAT);
         pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, speed + adjustment, RESOLUTION_8B_COMPARE_FORMAT);
     }
-
-    // previousMarker = reflectors.bridgeMarker();
-
 }
