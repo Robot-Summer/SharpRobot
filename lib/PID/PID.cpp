@@ -8,7 +8,7 @@
 
 //TODO: implement the motor class
 PID::PID(Reflectors* sensors, Motor* leftMotor, Motor* rightMotor, MyServo* steeringServo) : 
-    servoAngle(PIDNS::INITIAL_ANGLE),
+    servoAngle(ServoNS::INITIAL_ANGLE),
     lastState(0),
     timeInCurrent(0),
     timeInPrev(0),
@@ -17,13 +17,7 @@ PID::PID(Reflectors* sensors, Motor* leftMotor, Motor* rightMotor, MyServo* stee
     reflectors(sensors),
     leftMotor(leftMotor),
     rightMotor(rightMotor),
-    steeringServo(steeringServo)
-    {
-    
-    //servo pin declarations
-    pinMode(PIDNS::SERVO_PIN, OUTPUT);
-
-}
+    steeringServo(steeringServo) {}
 
 int PID::getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState) {
     int state = 0;
@@ -34,24 +28,24 @@ int PID::getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int r
         if (rightSensor2 == 0) {
             state = 1;
         } else if (rightSensor2 == 1) {
-            state = 2;
+            state = 4;
         }
     } else if (leftSensor1 == 1) {
         if (leftSensor2 == 0) {
             state = -1;
         } else if (leftSensor2 == 1) {
-            state = -2;
+            state = -4;
         }
     } else if (rightSensor2 == 1) {
-        state = 3;
+        state = 6;
     } else if (leftSensor2 == 1) {
-        state = -3;
+        state = -6;
     } else {
         //state = lastState;
         if (lastState > 0) {
-            state = 4;
+            state = 8;
         } else if (lastState < 0) {
-            state = -4;
+            state = -8;
         } 
     }
 
@@ -91,11 +85,11 @@ void PID::usePID(int speed) {
 
     lastState = currentState;
 
-    if (currentState == 4) {
+    if (currentState == 8) {
         leftMotor -> speed((speed + 20));
         rightMotor -> speed(-(speed + 20));
     }
-    else if (currentState == -4 ) {
+    else if (currentState == -8 ) {
         leftMotor -> speed(-(speed + 20));
         rightMotor -> speed((speed + 20)); 
     }
