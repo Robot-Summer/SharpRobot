@@ -116,21 +116,15 @@ void PID::usePID(int speed) {
     lastState = currentState;
 
     if (currentState == 4) {
-        pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, speed + 20, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, speed + 20, RESOLUTION_8B_COMPARE_FORMAT);
+        leftMotor -> speed((speed + 20));
+        rightMotor -> speed(-(speed + 20));
     }
     else if (currentState == -4 ) {
-        pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, speed + 20, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, speed + 20, RESOLUTION_8B_COMPARE_FORMAT);
+        leftMotor -> speed(-(speed + 20));
+        rightMotor -> speed((speed + 20)); 
     }
     else {
-        pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, speed + adjustment, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, speed + adjustment, RESOLUTION_8B_COMPARE_FORMAT);
+        leftMotor -> speed(speed + adjustment);
+        rightMotor -> speed(speed - adjustment);
     }
 }

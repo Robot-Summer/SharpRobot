@@ -112,7 +112,8 @@ bool Master::goToState(MasterState futureState) {
 
 void Master::stop() {
     if (stopped){ //add the code to stop the motors. 
-
+        leftMotor -> stop();
+        rightMotor -> stop();
         return;
     }
     stopped = true;
