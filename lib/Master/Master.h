@@ -6,11 +6,9 @@
 #include <Wire.h>
 
 
-#include <IR.h>
 #include <PID.h>
 #include <Motor.h>
 #include <Constants.h>
-#include <Gyroscope.h>
 
 //States
 enum class MasterState { //TODO: change as needed
@@ -83,7 +81,6 @@ class Master {
         Motor* leftMotor;
         Motor* rightMotor;
 
-        IR ir;
         PID tapeFollow;
 
         unsigned long rampTimer;

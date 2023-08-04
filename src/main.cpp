@@ -1,8 +1,6 @@
 #include <Arduino.h>
-#include <Wire.h>
 
 #include <Constants.h>
-#include <IR.h>
 #include <Helper.h>
 #include <Master.h>
 #include <PID.h>

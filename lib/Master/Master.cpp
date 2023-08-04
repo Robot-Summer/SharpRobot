@@ -1,10 +1,8 @@
 #include <Arduino.h>
 
-#include <IR.h>
 #include <PID.h>
 #include <Motor.h>
 #include <Constants.h>
-#include <Gyroscope.h>
 
 #include <Master.h>
 
@@ -32,29 +30,29 @@ MasterState Master::poll() {
 
             // reflectors -> printValues();
 
-            if (!prePreMarker) { //checks if robot was previously previously on a marker
-                if (preMarker) {  //check if robot was previously on a marker
-                    if (reflectors -> bridgeMarker()) { //checks if the robot is currently on a marker      
+            // if (!prePreMarker) { //checks if robot was previously previously on a marker
+            //     if (preMarker) {  //check if robot was previously on a marker
+            //         if (reflectors -> bridgeMarker()) { //checks if the robot is currently on a marker      
                             
-                        if (secondMarker) { //checks if robot has crossed the bridge
-                            goToState(MasterState::DRV_TAPE_DOWN);
-                            secondMarker = false;
-                            rampTimer = millis();
-                            digitalWrite(PC13, HIGH);
-                            Serial3.println("Marker 2");
+            //             if (secondMarker) { //checks if robot has crossed the bridge
+            //                 goToState(MasterState::DRV_TAPE_DOWN);
+            //                 secondMarker = false;
+            //                 rampTimer = millis();
+            //                 digitalWrite(PC13, HIGH);
+            //                 Serial3.println("Marker 2");
 
-                        } else {
-                            secondMarker = true;
-                            digitalWrite(PC13, LOW);
-                            Serial3.println("Marker 1");
+            //             } else {
+            //                 secondMarker = true;
+            //                 digitalWrite(PC13, LOW);
+            //                 Serial3.println("Marker 1");
 
-                        }
+            //             }
 
 
 
-                    }
-                }
-            }
+            //         }
+            //     }
+            // }
 
             prePreMarker = preMarker;
             preMarker = reflectors -> bridgeMarker();
