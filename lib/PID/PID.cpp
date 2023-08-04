@@ -22,12 +22,6 @@ PID::PID(Reflectors* sensors, Motor* leftMotor, Motor* rightMotor) :
     //servo pin declarations
     pinMode(PIDNS::SERVO_PIN, OUTPUT);
 
-    //motor pin declarations
-    pinMode(MotorNS::LEFT_MOTOR_BWD, OUTPUT);
-    pinMode(MotorNS::LEFT_MOTOR_FWD, OUTPUT);
-    pinMode(MotorNS::RIGHT_MOTOR_FWD, OUTPUT);
-    pinMode(MotorNS::RIGHT_MOTOR_BWD, OUTPUT);
-
 }
 
 int PID::getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState) {
