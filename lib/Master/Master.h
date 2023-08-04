@@ -38,7 +38,7 @@ class Master {
         */
         Master(Reflectors* refl, Motor* leftMotor, Motor* rightMotor, MyServo* steeringServo) : 
                 preMarker(false), prePreMarker(false), 
-                secondMarker(false), reflectors(refl), 
+                secondMarker(0), reflectors(refl), 
                 tapeFollow(refl, leftMotor, rightMotor, steeringServo),
                 leftMotor(leftMotor), rightMotor(rightMotor),
                 steeringServo(steeringServo) {};
@@ -93,7 +93,8 @@ class Master {
 
         unsigned long rampTimer;
 
-        bool preMarker, prePreMarker, secondMarker;
+        bool preMarker, prePreMarker;
+        int secondMarker;
 
         bool stopped;
 

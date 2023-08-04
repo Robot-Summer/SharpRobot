@@ -94,7 +94,7 @@ void PID::usePID(int speed) {
         rightMotor -> speed((speed + 20)); 
     }
     else {
-        leftMotor -> speed(speed + adjustment);
-        rightMotor -> speed(speed - adjustment);
+        leftMotor -> speed(speed + (adjustment));
+        rightMotor -> speed(speed - (adjustment));
     }
 }

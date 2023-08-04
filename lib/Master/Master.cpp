@@ -28,38 +28,23 @@ MasterState Master::poll() {
 
             tapeFollow.usePID(MotorNS::MAX_SPEED);
 
-            //i need to check if the prePreMarker is false and then if the preMarker is true and then if the current marker is true
-
             // reflectors -> printValues();
 
-            // if (!prePreMarker) { //checks if robot was previously previously on a marker
-            //     if (preMarker) {  //check if robot was previously on a marker
-            //         if (reflectors -> bridgeMarker()) { //checks if the robot is currently on a marker      
-                            
-            //             if (secondMarker) { //checks if robot has crossed the bridge
-            //                 goToState(MasterState::DRV_TAPE_DOWN);
-            //                 secondMarker = false;
-            //                 rampTimer = millis();
-            //                 digitalWrite(PC13, HIGH);
-            //                 Serial3.println("Marker 2");
-
-            //             } else {
-            //                 secondMarker = true;
-            //                 digitalWrite(PC13, LOW);
-            //                 Serial3.println("Marker 1");
-
-            //             }
-
-
-
+            // //i need to check if the prePreMarker is false and then if the preMarker is true and then if the current marker is true
+            // if (!preMarker) { //checks if robot was previously previously on a marker
+            //     if (reflectors -> bridgeMarker()) { //checks if the robot is currently on a marker      
+            //         digitalWrite(PC13, !digitalRead(PC13));
+            //         if (secondMarker == 3) { //checks if robot has crossed the bridge
+            //             goToState(MasterState::DRV_TAPE_DOWN);
+            //             secondMarker = 0;
+            //             rampTimer = millis();
+            //         } else {
+            //             secondMarker++;
             //         }
             //     }
             // }
 
-            prePreMarker = preMarker;
-            preMarker = reflectors -> bridgeMarker();
-
-            
+            // preMarker = reflectors -> bridgeMarker();
             break;
 
         case MasterState::DRV_TAPE_DOWN:

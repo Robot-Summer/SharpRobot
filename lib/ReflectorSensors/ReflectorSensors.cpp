@@ -46,6 +46,7 @@ bool Reflectors::bridgeMarker() {
 }
 
 void Reflectors::printValues() {
+    Serial3.print("1  ");
     Serial3.print(analogRead(ReflectorsNS::LEFT_SENSOR_TWO));
     Serial3.print(",   ");
     Serial3.print(analogRead(ReflectorsNS::LEFT_SENSOR_ONE));

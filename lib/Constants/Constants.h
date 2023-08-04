@@ -15,7 +15,7 @@ namespace MotorNS {
 
     const int MOTOR_FREQ = 500;
 
-    const int MAX_SPEED = 185;
+    const int MAX_SPEED = 210;
 
     const int DOWN_RAMP_SPEED = 50 ;
 
@@ -34,7 +34,7 @@ namespace ServoNS {
 namespace PIDNS {
     // PID Constants
     const float KP = 5.2;
-    const float KD = 0.5;  
+    const float KD = .5;  
     const float KI = 0.001; 
 
 }
