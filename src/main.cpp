@@ -11,7 +11,10 @@
 HardwareSerial Serial3(PB11, PB10);
 
 Reflectors myReflectors;
-Master state(&myReflectors);
+Motor leftMotor(MotorNS::LEFT_MOTOR_FWD, MotorNS::LEFT_MOTOR_BWD);
+Motor rightMotor(MotorNS::RIGHT_MOTOR_FWD, MotorNS::RIGHT_MOTOR_BWD);
+
+Master state(&myReflectors, &leftMotor, &rightMotor);
 
 void setup() {
     Serial3.begin(9600);

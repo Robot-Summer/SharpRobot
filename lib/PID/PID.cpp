@@ -1,20 +1,22 @@
 #include <Arduino.h>
 #include <Constants.h>
-// #include <Motor.h>
+#include <Motor.h>
 #include <ReflectorSensors.h>
 
 
 #include <PID.h>
 
 //TODO: implement the motor class
-PID::PID(Reflectors* sensors) : 
+PID::PID(Reflectors* sensors, Motor* leftMotor, Motor* rightMotor) : 
     servoAngle(PIDNS::INITIAL_ANGLE),
     lastState(0),
     timeInCurrent(0),
     timeInPrev(0),
     integral(0.0F),
     lastError(0),
-    reflectors(sensors)
+    reflectors(sensors),
+    leftMotor(leftMotor),
+    rightMotor(rightMotor)
     {
     
     //servo pin declarations
@@ -81,8 +83,8 @@ void PID::writeServoAngle(int angle) {
 void PID::usePID(int speed) {
 
     // Get Line position (positive => drifiting right ; negative => drifiting left)
-    int currentState = getTotalState(reflectors->getReflectorValue(0), reflectors->getReflectorValue(1), 
-                                        reflectors->getReflectorValue(2), reflectors->getReflectorValue(3), lastState);
+    int currentState = getTotalState(reflectors -> getReflectorValue(0), reflectors -> getReflectorValue(1), 
+                                        reflectors -> getReflectorValue(2), reflectors -> getReflectorValue(3), lastState);
 
     // reflectors.printValues();
 

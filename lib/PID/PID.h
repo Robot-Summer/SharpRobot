@@ -12,9 +12,11 @@ class PID {
         /**
          * PID constructor
          * 
-         * @param sensors the sensors that will be used.
+         * @param sensors a pointer to the sensors that will be used.
+         * @param leftMotor a pointer to the left motor that will be used.
+         * @param rightMotor a pointer to the right motor that will be used.
         */
-        PID(Reflectors* sensors);
+        PID(Reflectors* sensors, Motor* leftMotor, Motor* rightMotor);
 
         /**
          * usePID makes the servos turn
@@ -70,6 +72,8 @@ class PID {
         int currentSpeed;
 
         Reflectors* reflectors;
+        Motor* leftMotor;
+        Motor* rightMotor;
         
 };
 

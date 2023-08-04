@@ -8,8 +8,6 @@
 
 #include <Master.h>
 
-Master::Master(Reflectors* refl) : previousMarker(false), secondMarker(false), reflectors(refl), tapeFollow(refl) {}
-
 MasterState Master::poll() {
     
     switch(currentState){
@@ -24,27 +22,44 @@ MasterState Master::poll() {
             
             break;
 
+        
+
         case MasterState::DRV_TAPE_NORM: 
 
             tapeFollow.usePID(MotorNS::MAX_SPEED);
 
-            // reflectors.printValues();
+            //i need to check if the prePreMarker is false and then if the preMarker is true and then if the current marker is true
 
-            if (!previousMarker) { //check if robot was previously not on a marker            
-                if (reflectors -> bridgeMarker()) { //checks if the robot is currently on a marker            
-                    if (secondMarker) { //checks if robot has crossed the bridge
-                        goToState(MasterState::DRV_TAPE_DOWN);
-                        secondMarker = false;
-                        rampTimer = millis();
+            // reflectors -> printValues();
 
-                    } else {
-                        secondMarker = true;
+            if (!prePreMarker) { //checks if robot was previously previously on a marker
+                if (preMarker) {  //check if robot was previously on a marker
+                    if (reflectors -> bridgeMarker()) { //checks if the robot is currently on a marker      
+                            
+                            if (secondMarker) { //checks if robot has crossed the bridge
+                                goToState(MasterState::DRV_TAPE_DOWN);
+                                secondMarker = false;
+                                rampTimer = millis();
+                                digitalWrite(PC13, HIGH);
+                                Serial3.println("Marker 2");
+
+                            } else {
+                                secondMarker = true;
+                                digitalWrite(PC13, LOW);
+                                Serial3.println("Marker 1");
+
+                            }
+
+
 
                     }
                 }
             }
 
-            previousMarker = reflectors -> bridgeMarker();
+
+            prePreMarker = preMarker;
+            preMarker = reflectors -> bridgeMarker();
+
             
             break;
 
@@ -53,7 +68,7 @@ MasterState Master::poll() {
             tapeFollow.usePID(MotorNS::DOWN_RAMP_SPEED);
 
             if (millis() - rampTimer >= TimerNS::RAMP_TIMER) {
-                goToState(MasterState::SHRP_TURN);
+                goToState(MasterState::DRV_TAPE_NORM);
             }
 
             break;

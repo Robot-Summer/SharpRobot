@@ -29,8 +29,16 @@ class Master {
         
         /**
          * Master class constructor
+         * 
+         * @param refl a pointer to the reflectors that will be used.
+         * @param leftMotor a pointer to the left motor that will be used.
+         * @param rightMotor a pointer to the right motor that will be used.
         */
-        Master(Reflectors* refl);
+        Master(Reflectors* refl, Motor* leftMotor, Motor* rightMotor) : 
+                preMarker(false), prePreMarker(false), 
+                secondMarker(false), reflectors(refl), 
+                tapeFollow(refl, leftMotor, rightMotor),
+                leftMotor(leftMotor), rightMotor(rightMotor) {};
 
         /**
          * masterstate pole
@@ -70,13 +78,17 @@ class Master {
         //TODO add all other variables and class instances as this master class will be called at the beggining of the run.
     
         MasterState currentState;
+        
         Reflectors* reflectors;
+        Motor* leftMotor;
+        Motor* rightMotor;
+
         IR ir;
         PID tapeFollow;
 
         unsigned long rampTimer;
 
-        bool previousMarker, secondMarker;
+        bool preMarker, prePreMarker, secondMarker;
 
         bool stopped;
 

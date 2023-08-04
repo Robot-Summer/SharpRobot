@@ -17,7 +17,7 @@ namespace MotorNS {
 
     const int MAX_SPEED = 185;
 
-    const int DOWN_RAMP_SPEED = 0;
+    const int DOWN_RAMP_SPEED = 50 ;
 
 }
 
