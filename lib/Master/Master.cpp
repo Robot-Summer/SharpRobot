@@ -8,83 +8,101 @@
 
 #include <Master.h>
 
-//namespace Master {
+Master::Master(Reflectors* refl) : previousMarker(false), secondMarker(false), reflectors(refl), tapeFollow(refl) {}
 
-    MasterState Master::poll() {
-        
-        switch(currentState){
+MasterState Master::poll() {
+    
+    switch(currentState){
 
-            case MasterState::IDLE:
-                //TODO: write code for the switch (maybe debouncing needed)
-                if (true) {//change the part inside the if statment
-                    advanceState();
-                } else {
-                    stop();
-                }
-                
-                break;
-
-            case MasterState::DRV_TAPE:  
-                tapeFollow.usePID();
-                break;
-
-            case MasterState::DRV_IR:
-                //TODO: add the code for when ir is sampling
-
-                float waveform[IRNS::NUM_READINGS];
-                ir.waveformSample(waveform);
-                ir.maxCorrelationOneK(waveform);
-
+        case MasterState::IDLE:
+            //TODO: write code for the switch (maybe debouncing needed)
+            if (true) {//change the part inside the if statment
                 advanceState();
-                break;
-
-            case MasterState::SHRP_TURN:
-                //TODO: add the code for when ir is sampling
-
-                advanceState();
-                break;
-
-            case MasterState::OTHR_RBT:
-                //TODO: add the code for when ir is sampling
-                break;
-
-            case MasterState::DRP_BAN:
-                //TODO: add the code for when ir is sampling
-                break;
-
-            case MasterState::DONE:                
+            } else {
                 stop();
-                break;
+            }
+            
+            break;
 
-        }
+        case MasterState::DRV_TAPE_NORM: 
 
-        return currentState;
+            tapeFollow.usePID(MotorNS::MAX_SPEED);
+
+            
+
+            // reflectors.printValues();
+
+            if (!previousMarker) { //check if robot was previously not on a marker            
+                if (reflectors -> bridgeMarker()) { //checks if the robot is currently on a marker            
+                    if (secondMarker) { //checks if robot has crossed the bridge
+                        goToState(MasterState::DRV_TAPE_DOWN);
+                        secondMarker = false;
+                        rampTimer = millis();
+
+                    } else {
+                        secondMarker = true;
+
+                    }
+                }
+            }
+
+            previousMarker = reflectors -> bridgeMarker();
+            
+            break;
+
+        case MasterState::DRV_TAPE_DOWN:
+            
+            tapeFollow.usePID(MotorNS::DOWN_RAMP_SPEED);
+
+            if (millis() - rampTimer >= TimerNS::RAMP_TIMER) {
+                goToState(MasterState::DRV_TAPE_NORM);
+            }
+
+            break;
+
+        case MasterState::SHRP_TURN:
+            //TODO: add the code for when ir is sampling
+
+            advanceState();
+            break;
+
+        case MasterState::OTHR_RBT:
+            //TODO: add the code for when ir is sampling
+            break;
+
+        case MasterState::DRP_BAN:
+            //TODO: add the code for when ir is sampling
+            break;
+
+        case MasterState::DONE:                
+            stop();
+            break;
+
     }
 
-    bool Master::advanceState() {
-        if (currentState == MasterState::DONE){
-            return false;
-        }
-        currentState = static_cast<MasterState>(static_cast<int>(currentState) + 1);
-        return true;
+    return currentState;
+}
+
+bool Master::advanceState() {
+    if (currentState == MasterState::DONE){
+        return false;
     }
+    currentState = static_cast<MasterState>(static_cast<int>(currentState) + 1);
+    return true;
+}
 
-    bool Master::goToState(MasterState futureState) {
-        if (currentState == MasterState::DONE){
-            return false;
-        }
-        currentState = futureState;
-        return true;
+bool Master::goToState(MasterState futureState) {
+    if (currentState == MasterState::DONE){
+        return false;
     }
+    currentState = futureState;
+    return true;
+}
 
-    void Master::stop() {
-        if (stopped){ //add the code to stop the motors. 
+void Master::stop() {
+    if (stopped){ //add the code to stop the motors. 
 
-            return;
-        }
-        stopped = true;
+        return;
     }
-
-
-
-//}
+    stopped = true;
+}

@@ -4,20 +4,24 @@
 #include <Arduino.h>
 #include <Constants.h>
 #include <Motor.h>
+#include <ReflectorSensors.h>
 
 class PID {
     public:
 
         /**
          * PID constructor
+         * 
+         * @param sensors the sensors that will be used.
         */
-        PID();
+        PID(Reflectors* sensors);
 
         /**
          * usePID makes the servos turn
          * 
+         * @param speed the speed at which the motors will run. (0 to 255)
         */
-        void usePID();
+        void usePID(int speed);
 
     private: 
 
@@ -32,7 +36,7 @@ class PID {
          * 
          * @return an integer value representing the state of the system
         */
-        int getCurrentState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState);
+        int getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState);
 
         /**
          * limits the angle of the servo based on the geometry of the chasis so that it does not stall
@@ -43,14 +47,14 @@ class PID {
         */
         int limitAngle(int angle);
 
-        /**
-         * converts the analog signal from the reflectance sensors to a digital reading
-         * 
-         * @param value the reading from the sensor (0 - 1023)
-         * 
-         * @return an integer of either 0 or 1. 0 if the value is equal to or below the specified threshold in constants or 1 if above. 
-        */
-        int getDigital(int value);
+        // /**
+        //  * converts the analog signal from the reflectance sensors to a digital reading
+        //  * 
+        //  * @param value the reading from the sensor (0 - 1023)
+        //  * 
+        //  * @return an integer of either 0 or 1. 0 if the value is equal to or below the specified threshold in constants or 1 if above. 
+        // */
+        // int getDigital(int value);
 
         /**
          * writes the angle of the servo
@@ -68,10 +72,13 @@ class PID {
         int lastState;
         int timeInCurrent;
         int timeInPrev;
-
-
         float integral;
         int lastError;
+        int bridgeMarker;
+        bool previousMarker;
+        int currentSpeed;
+
+        Reflectors* reflectors;
         
 };
 

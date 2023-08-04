@@ -15,7 +15,9 @@ namespace MotorNS {
 
     const int MOTOR_FREQ = 500;
 
-    const int MAX_SPEED = 190;
+    const int MAX_SPEED = 185;
+
+    const int DOWN_RAMP_SPEED = 0;
 
 }
 
@@ -33,24 +35,28 @@ namespace PIDNS {
     const float KD = 0.5;  
     const float KI = 0.001; 
 
-    const int DIGITAL_THRESHOLD = 185;
+}
 
-
-    // Reflectance sensors PINS
+namespace ReflectorsNS {
     const int LEFT_SENSOR_ONE = PB0;
     const int LEFT_SENSOR_TWO = PB1;
     const int RIGHT_SENSOR_ONE = PA5;
     const int RIGHT_SENSOR_TWO = PA4;
 
+    const int DIGITAL_THRESHOLD = 185;
+
 }
 
 //Gyroscope Name Space
 namespace GyroscopeNS {
-    const int MPU_ADDR=0x68;
-    const int MIN_VAL=265;
-    const int MAX_VAL=402;
+    const int MPU_ADDR = 0x68;
+    const int MIN_VAL = 265;
+    const int MAX_VAL = 402;
 
+}
 
+namespace TimerNS {
+    const int RAMP_TIMER = 4000;
 }
 
 //IR sensor Name Space

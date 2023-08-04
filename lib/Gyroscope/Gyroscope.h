@@ -4,14 +4,10 @@
 #include <Arduino.h>
 
 class Gyro {
-    
-
-
     public:
 
         /** 
          * Gyro class constructor
-         * 
         */
         Gyro();
 
@@ -20,7 +16,6 @@ class Gyro {
          * 
          * @return integer value between 0 to 360 degrees
         */
-
         float getXAngle();
 
         /** 
@@ -28,7 +23,6 @@ class Gyro {
          * 
          * @return integer value between 0 to 360 degrees
         */
-
         float getYAngle();
 
         /** 
@@ -36,7 +30,6 @@ class Gyro {
          * 
          * @return integer value between 0 to 360 degrees
         */
-
         float getZAngle();
 
         /** 
@@ -48,14 +41,11 @@ class Gyro {
         /** 
          * Begins transmission of signal with the gyroscope
         */
-
         void beginTransmission();
-
-
-        int16_t AcX,AcY,AcZ,GyX,GyY,GyZ;
-
+        
     private:
 
+        int16_t AcX,AcY,AcZ,GyX,GyY,GyZ;
     
 };
 

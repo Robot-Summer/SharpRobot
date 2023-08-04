@@ -1,31 +1,34 @@
 #include <Arduino.h>
 #include <Constants.h>
 // #include <Motor.h>
+#include <ReflectorSensors.h>
+
 
 #include <PID.h>
 
 //TODO: implement the motor class
-PID::PID() : 
+PID::PID(Reflectors* sensors) : 
     servoAngle(PIDNS::INITIAL_ANGLE),
     lastState(0),
     timeInCurrent(0),
     timeInPrev(0),
     integral(0.0F),
-    lastError(0) 
+    lastError(0),
+    reflectors(sensors)
     {
-
+    
+    //servo pin declarations
     pinMode(PIDNS::SERVO_PIN, OUTPUT);
 
+    //motor pin declarations
     pinMode(MotorNS::LEFT_MOTOR_BWD, OUTPUT);
     pinMode(MotorNS::LEFT_MOTOR_FWD, OUTPUT);
-
     pinMode(MotorNS::RIGHT_MOTOR_FWD, OUTPUT);
     pinMode(MotorNS::RIGHT_MOTOR_BWD, OUTPUT);
 
-
 }
 
-int PID::getCurrentState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState) {
+int PID::getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState) {
     int state = 0;
   
     if (rightSensor1 == 1 && leftSensor1 == 1) {
@@ -70,29 +73,18 @@ int PID::limitAngle(int angle) {
     return angle;
 }
 
-int PID::getDigital(int value) {
-    if (value > PIDNS::DIGITAL_THRESHOLD) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-}
-
 void PID::writeServoAngle(int angle) {
     int pwmSignal = angle * 11;
     pwm_start(PIDNS::SERVO_PIN, 50, pwmSignal, TimerCompareFormat_t::MICROSEC_COMPARE_FORMAT);
 }
 
-void PID::usePID() {
-
-    int l1d = getDigital(analogRead(PIDNS::LEFT_SENSOR_ONE));
-    int r1d = getDigital(analogRead(PIDNS::RIGHT_SENSOR_ONE));
-    int l2d = getDigital(analogRead(PIDNS::LEFT_SENSOR_TWO));
-    int r2d = getDigital(analogRead(PIDNS::RIGHT_SENSOR_TWO));
+void PID::usePID(int speed) {
 
     // Get Line position (positive => drifiting right ; negative => drifiting left)
-    int currentState = getCurrentState(l2d, l1d, r1d, r2d, lastState);
+    int currentState = getTotalState(reflectors->getReflectorValue(0), reflectors->getReflectorValue(1), 
+                                        reflectors->getReflectorValue(2), reflectors->getReflectorValue(3), lastState);
+
+    // reflectors.printValues();
 
     if (currentState != lastState) {
         timeInPrev = timeInCurrent;  
@@ -118,27 +110,28 @@ void PID::usePID() {
     servoAngle = PIDNS::INITIAL_ANGLE + adjustment;  
     servoAngle = limitAngle(servoAngle);
     writeServoAngle(servoAngle);
-    
+
     lastState = currentState;
 
     if (currentState == 4) {
         pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
         pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, speed + 20, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, speed + 20, RESOLUTION_8B_COMPARE_FORMAT);
     }
     else if (currentState == -4 ) {
         pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
         pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, speed + 20, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, speed + 20, RESOLUTION_8B_COMPARE_FORMAT);
     }
     else {
         pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
         pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED - 40 + adjustment, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED - 40 + adjustment, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, speed + adjustment, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, speed + adjustment, RESOLUTION_8B_COMPARE_FORMAT);
     }
-    
+
+    // previousMarker = reflectors.bridgeMarker();
 
 }
