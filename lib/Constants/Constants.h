@@ -14,8 +14,26 @@ namespace MotorsNS {
 }
 
 
-//Reflectance Sensors Name Space
-namespace ReflectanceSensorsNS {
+// Constants for the PID controller for tape following
+namespace PIDNS {
+    // Servo Constants
+    const int MAX_ANGLE = 138;
+    const int MIN_ANGLE = 52;
+    const int INITIAL_ANGLE = 95;
+    static const PinName SERVO_PIN = PA_0;
+
+    // PID Constants
+    const float KP = 12.0;
+    const float KD = 0.5;  
+    const float KI = 0.001; 
+
+    const int DIGITAL_THRESHOLD = 185;
+
+    // Reflectance sensors PINS
+    const int LEFT_SENSOR_ONE = PB0;
+    const int LEFT_SENSOR_TWO = PB1;
+    const int RIGHT_SENSOR_ONE = PA5;
+    const int RIGHT_SENSOR_TWO = PA4;
 
 }
 
