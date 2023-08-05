@@ -15,7 +15,7 @@ namespace MotorNS {
 
     const int MOTOR_FREQ = 500;
 
-    const int NORM_SPEED = 185;
+    const int NORM_SPEED = 190;
     const int BRIDGE_SPEED = 150;
     const int RAMP_SPEED = 50;
 
@@ -44,8 +44,8 @@ namespace PickerUpServoNS{
 //Reflectance Sensors Name Space
 namespace PIDNS {
     // PID Constants
-    const float KP = 6.0;
-    const float KD = 0.05;  
+    const float KP = 12.0;
+    const float KD = 0.5;  
     const float KI = 0.001; 
 
 }
