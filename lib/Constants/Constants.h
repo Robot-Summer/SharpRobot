@@ -15,7 +15,7 @@ namespace MotorNS {
 
     const int MOTOR_FREQ = 500;
 
-    const int MAX_SPEED = 210;
+    const int MAX_SPEED = 130;
 
     const int DOWN_RAMP_SPEED = 50 ;
 
@@ -27,6 +27,17 @@ namespace ServoNS {
     const int INITIAL_ANGLE = 95;
     
     static const PinName SERVO_PIN = PA_0;
+    
+}
+
+namespace PickerUpServoNS{
+    const int MAX_ANGLE = 180;
+    const int MIN_ANGLE = 0;
+    const int INITIAL_ANGLE = 90;
+    const int OPEN_ANGLE = 135;
+    const int CLOSE_ANGLE = 35;
+
+    static const PinName LEFT_SERVO_PIN = PA_1;
 }
 
 
