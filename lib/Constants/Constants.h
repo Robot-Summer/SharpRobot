@@ -15,9 +15,9 @@ namespace MotorNS {
 
     const int MOTOR_FREQ = 500;
 
-    const int MAX_SPEED = 130;
-
-    const int DOWN_RAMP_SPEED = 50 ;
+    const int NORM_SPEED = 185;
+    const int BRIDGE_SPEED = 150;
+    const int RAMP_SPEED = 50;
 
 }
 
@@ -44,8 +44,8 @@ namespace PickerUpServoNS{
 //Reflectance Sensors Name Space
 namespace PIDNS {
     // PID Constants
-    const float KP = 5.2;
-    const float KD = .5;  
+    const float KP = 6.0;
+    const float KD = 0.05;  
     const float KI = 0.001; 
 
 }
@@ -69,7 +69,9 @@ namespace GyroscopeNS {
 }
 
 namespace TimerNS {
-    const int RAMP_TIMER = 4000;
+    const int RAMP_TIMER = 3500;
+    const int BRIDGE_TIMER = 2750;
+    const int SHRP_TIMER = 1300;
 }
 
 //IR sensor Name Space

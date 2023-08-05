@@ -18,6 +18,7 @@ enum class MasterState { //TODO: change as needed
     IDLE,
     DRV_IR,
     DRV_TAPE_NORM,
+    DRV_TAPE_BRIDGE,
     DRV_TAPE_DOWN,
     SHRP_TURN,
     OTHR_RBT,
@@ -91,7 +92,7 @@ class Master {
         IR ir;
         PID tapeFollow;
 
-        unsigned long rampTimer;
+        unsigned long rampTimer, bridgeTimer, shrpTimer;
 
         bool preMarker, prePreMarker;
         int secondMarker;

@@ -26,7 +26,7 @@ MasterState Master::poll() {
 
         case MasterState::DRV_TAPE_NORM: 
 
-            tapeFollow.usePID(MotorNS::MAX_SPEED);
+            tapeFollow.usePID(MotorNS::NORM_SPEED);
 
             // reflectors -> printValues();
 
@@ -45,20 +45,52 @@ MasterState Master::poll() {
             // }
 
             // preMarker = reflectors -> bridgeMarker();
+
+            // if (reflectors -> bridgeMarker()) {
+            //     goToState(MasterState::DRV_TAPE_BRIDGE);
+            //     digitalWrite(PC13, LOW);
+            //     bridgeTimer = millis();
+
+            // }
+
+
             break;
+
+        case MasterState::DRV_TAPE_BRIDGE:
+
+            tapeFollow.usePID(MotorNS::NORM_SPEED);
+
+            if (millis() - bridgeTimer >= TimerNS::BRIDGE_TIMER) {
+                goToState(MasterState::DRV_TAPE_DOWN);
+                digitalWrite(PC13, HIGH);
+                rampTimer = millis();
+            }
+
+        break;
 
         case MasterState::DRV_TAPE_DOWN:
             
-            tapeFollow.usePID(MotorNS::DOWN_RAMP_SPEED);
+            tapeFollow.usePID(MotorNS::RAMP_SPEED);
 
             if (millis() - rampTimer >= TimerNS::RAMP_TIMER) {
-                goToState(MasterState::DRV_TAPE_NORM);
+                goToState(MasterState::SHRP_TURN);
+                digitalWrite(PC13, LOW);
+                shrpTimer = millis();
             }
 
             break;
 
         case MasterState::SHRP_TURN:
-            goToState(MasterState::DRV_TAPE_NORM);
+            delay(1000);
+            steeringServo -> write(ServoNS::MAX_ANGLE);
+
+            leftMotor -> speed((MotorNS::NORM_SPEED  + 20));
+            rightMotor -> stop();
+
+            if (millis() - shrpTimer >= TimerNS::SHRP_TIMER) {
+                goToState(MasterState::DRV_TAPE_NORM);
+            }
+
             break;
 
         case MasterState::OTHR_RBT:
