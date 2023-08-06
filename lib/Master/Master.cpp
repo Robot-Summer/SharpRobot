@@ -5,8 +5,11 @@
 #include <Motor.h>
 #include <Constants.h>
 #include <Gyroscope.h>
+#include <TiltSensor.h>
 
 #include <Master.h>
+
+TiltSensor tiltSensor;
 
 MasterState Master::poll() {
     
@@ -27,6 +30,10 @@ MasterState Master::poll() {
         case MasterState::DRV_TAPE_NORM: 
 
             tapeFollow.usePID(MotorNS::MAX_SPEED);
+
+            if (tiltSensor.readTiltSensor()){
+                goToState(MasterState::DRV_TAPE_DOWN);
+            }
 
             // reflectors -> printValues();
 
@@ -50,6 +57,10 @@ MasterState Master::poll() {
         case MasterState::DRV_TAPE_DOWN:
             
             tapeFollow.usePID(MotorNS::DOWN_RAMP_SPEED);
+
+            if (!tiltSensor.readTiltSensor()){
+                goToState(MasterState::DRV_TAPE_NORM);
+            }
 
             // if (millis() - rampTimer >= TimerNS::RAMP_TIMER) {
             //     goToState(MasterState::DRV_TAPE_NORM);

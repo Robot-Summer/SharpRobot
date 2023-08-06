@@ -88,4 +88,8 @@ namespace IRNS {
 
 }
 
+namespace TiltNS{
+    const int TILT_SENSOR_PIN = PB4;
+}
+
 #endif
