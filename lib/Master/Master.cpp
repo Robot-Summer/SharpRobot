@@ -28,6 +28,8 @@ MasterState Master::poll() {
 
             tapeFollow.usePID(MotorNS::NORM_SPEED);
 
+            reflectors -> printValues();
+
             // reflectors -> printValues();
 
             // //i need to check if the prePreMarker is false and then if the preMarker is true and then if the current marker is true
