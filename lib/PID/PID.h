@@ -29,6 +29,37 @@ class PID {
 
         // class inits and other variables.
 
+        private: 
+
+        /**
+         * Calculates the current state of the control system. 
+         * 
+         * @param leftSensor2 The reading of the farthest left reflectance sensor
+         * @param leftSensor1 The reading of the middle left reflectance sensor
+         * @param rightSensor1 The reading of the middle right reflectance sensor
+         * @param rightSensor2 The reading of the farthest right reflectance sensor
+         * @param lastState
+         * 
+         * @return an integer value representing the state of the system
+        */
+        int getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState);
+
+        /**
+         * limits the angle of the servo based on the geometry of the chasis so that it does not stall
+         * 
+         * @param angle the current servo angle that it currently should be 
+         * 
+         * @return an integer with the limited angle it ranges form PIDNS::MIN_ANGLE to PIDNS::MAX_ANGLE
+        */
+        int limitAngle(int angle);
+
+        /**
+         * writes the angle of the servo
+         * 
+         * @param angle the angle we want the servo to turn. 
+        */
+        void writeServoAngle(int angle);
+
         int servoAngle;
         int lastState;
         int timeInCurrent;
