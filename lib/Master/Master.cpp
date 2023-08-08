@@ -31,10 +31,10 @@ MasterState Master::poll() {
 
             tapeFollow.usePID(MotorNS::MAX_SPEED);
 
-            if (tiltSensor.readTiltSensor()){
-                goToState(MasterState::DRV_TAPE_DOWN);
-                digitalWrite(PC13, LOW);
-            }
+            // if (tiltSensor.readTiltSensor()){
+            //     goToState(MasterState::DRV_TAPE_DOWN);
+            //     digitalWrite(PC13, LOW);
+            // }
 
             // reflectors -> printValues();
 

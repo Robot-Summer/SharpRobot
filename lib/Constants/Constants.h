@@ -15,7 +15,7 @@ namespace MotorNS {
 
     const int MOTOR_FREQ = 100;
 
-    const int MAX_SPEED = 190;
+    const int MAX_SPEED = 140;
 
     const int DOWN_RAMP_SPEED = 60;
 
@@ -23,7 +23,7 @@ namespace MotorNS {
 
 namespace ServoNS {
     const int MAX_ANGLE = 138;
-    const int MIN_ANGLE = 52;
+    const int MIN_ANGLE = 55;
     const int INITIAL_ANGLE = 95;
     
     static const PinName SERVO_PIN = PA_0;
@@ -46,8 +46,8 @@ namespace PIDNS {
     // PID Constants
     // Motor speed = 190 and freq = 1000
     // const float KP = 6;
-    // const float KD = 0.5;  
-    // const float KI = 0.001; 
+    // const float KD = 0;  
+    // const float KI = 0.001;
 
     const float KP = 12;
     const float KD = 1.0;  
