@@ -56,6 +56,12 @@ namespace PIDNS {
 
 }
 
+namespace SonarNS {
+    const int ECHO = PB8;
+    const int TRIG = PB9;
+
+}
+
 namespace ReflectorsNS {
     // const int LEFT_SENSOR_ONE = PB0;
     // const int LEFT_SENSOR_TWO = PB1;

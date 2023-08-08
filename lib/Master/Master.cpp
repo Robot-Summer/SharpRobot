@@ -6,6 +6,9 @@
 #include <Constants.h>
 #include <Gyroscope.h>
 #include <TiltSensor.h>
+#include <ReflectorSensors.h>
+#include <MyServo.h>
+#include <Sonar.h>
 
 #include <Master.h>
 

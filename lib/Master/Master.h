@@ -12,6 +12,7 @@
 #include <Constants.h>
 #include <ReflectorSensors.h>
 #include <MyServo.h>
+#include <Sonar.h>
 
 //States
 enum class MasterState { //TODO: change as needed
@@ -42,7 +43,8 @@ class Master {
                 secondMarker(0), reflectors(refl), 
                 tapeFollow(refl, leftMotor, rightMotor, steeringServo),
                 leftMotor(leftMotor), rightMotor(rightMotor),
-                steeringServo(steeringServo) {};
+                steeringServo(steeringServo),
+                sonar(SonarNS::ECHO, SonarNS::TRIG) {};
 
         /**
          * masterstate pole
@@ -87,6 +89,8 @@ class Master {
         Motor* leftMotor;
         Motor* rightMotor;
         MyServo* steeringServo;
+
+        Sonar sonar;
 
 
         IR ir;
