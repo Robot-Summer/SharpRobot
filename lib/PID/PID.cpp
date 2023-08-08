@@ -26,26 +26,34 @@ int PID::getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int r
         state = 0;
     } else if (rightSensor1 == 1) {
         if (rightSensor2 == 0) {
+            // state = 1;
             state = 1;
         } else if (rightSensor2 == 1) {
-            state = 4;
+            // state = 4;
+            state = 2;
         }
     } else if (leftSensor1 == 1) {
         if (leftSensor2 == 0) {
+            // state = -1;
             state = -1;
         } else if (leftSensor2 == 1) {
-            state = -4;
+            // state = -4;
+            state = -2;
         }
     } else if (rightSensor2 == 1) {
-        state = 6;
+        // state = 6;
+        state = 3;
     } else if (leftSensor2 == 1) {
-        state = -6;
+        // state = -6;
+        state = -3;
     } else {
         //state = lastState;
         if (lastState > 0) {
-            state = 8;
+            // state = 8;
+            state = 4;
         } else if (lastState < 0) {
-            state = -8;
+            // state = -8;
+            state = -4;
         } 
     }
 
@@ -85,16 +93,18 @@ void PID::usePID(int speed) {
 
     lastState = currentState;
 
-    if (currentState == 8) {
-        leftMotor -> speed((speed + 30));
-        rightMotor -> speed(-(speed + 30));
+    float scalingFactor = 1;
+
+    if (currentState == 4) {
+        leftMotor -> speed((speed));
+        rightMotor -> speed(-(speed));
     }
-    else if (currentState == -8 ) {
-        leftMotor -> speed(-(speed + 30));
-        rightMotor -> speed((speed + 30 )); 
+    else if (currentState == -4 ) {
+        leftMotor -> speed(-(speed));
+        rightMotor -> speed((speed)); 
     }
     else {
-        leftMotor -> speed(speed + (adjustment));
-        rightMotor -> speed(speed - (adjustment));
+        leftMotor -> speed(speed + (scalingFactor*adjustment));
+        rightMotor -> speed(speed - (scalingFactor*adjustment));
     }
 }

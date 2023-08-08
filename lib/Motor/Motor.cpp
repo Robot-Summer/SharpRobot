@@ -29,7 +29,7 @@ void Motor::speed(int speed) {
         stop();
     } else{
         pwm_start(forwardPin, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(backwardPin, MotorNS::MOTOR_FREQ, speed, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(backwardPin, MotorNS::MOTOR_FREQ, -1*speed, RESOLUTION_8B_COMPARE_FORMAT);
     }
 
 }

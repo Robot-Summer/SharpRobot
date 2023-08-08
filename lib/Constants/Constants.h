@@ -10,14 +10,14 @@ namespace MotorNS {
 
     static const PinName RIGHT_MOTOR_FWD = PA_10;
     static const PinName RIGHT_MOTOR_BWD = PA_11;
-    static const PinName LEFT_MOTOR_FWD = PA_8;
-    static const PinName LEFT_MOTOR_BWD = PA_9;
+    static const PinName LEFT_MOTOR_FWD = PA_9;
+    static const PinName LEFT_MOTOR_BWD = PA_8;
 
-    const int MOTOR_FREQ = 500;
+    const int MOTOR_FREQ = 100;
 
     const int MAX_SPEED = 190;
 
-    const int DOWN_RAMP_SPEED = 100 ;
+    const int DOWN_RAMP_SPEED = 60;
 
 }
 
@@ -44,17 +44,28 @@ namespace PickerUpServoNS{
 //Reflectance Sensors Name Space
 namespace PIDNS {
     // PID Constants
-    const float KP = 6;
-    const float KD = 0.5;  
+    // Motor speed = 190 and freq = 1000
+    // const float KP = 6;
+    // const float KD = 0.5;  
+    // const float KI = 0.001; 
+
+    const float KP = 12;
+    const float KD = 1.0;  
     const float KI = 0.001; 
+
 
 }
 
 namespace ReflectorsNS {
-    const int LEFT_SENSOR_ONE = PB0;
-    const int LEFT_SENSOR_TWO = PB1;
-    const int RIGHT_SENSOR_ONE = PA5;
-    const int RIGHT_SENSOR_TWO = PA4;
+    // const int LEFT_SENSOR_ONE = PB0;
+    // const int LEFT_SENSOR_TWO = PB1;
+    // const int RIGHT_SENSOR_ONE = PA5;
+    // const int RIGHT_SENSOR_TWO = PA4;
+
+    const int LEFT_SENSOR_ONE = PA5;
+    const int LEFT_SENSOR_TWO = PA4;
+    const int RIGHT_SENSOR_ONE = PB0;
+    const int RIGHT_SENSOR_TWO = PB1;
 
     const int DIGITAL_THRESHOLD = 185;
 

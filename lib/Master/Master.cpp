@@ -33,6 +33,7 @@ MasterState Master::poll() {
 
             if (tiltSensor.readTiltSensor()){
                 goToState(MasterState::DRV_TAPE_DOWN);
+                digitalWrite(PC13, LOW);
             }
 
             // reflectors -> printValues();
@@ -60,6 +61,7 @@ MasterState Master::poll() {
 
             if (!tiltSensor.readTiltSensor()){
                 goToState(MasterState::DRV_TAPE_NORM);
+                digitalWrite(PC13, HIGH);
             }
 
             // if (millis() - rampTimer >= TimerNS::RAMP_TIMER) {
