@@ -17,13 +17,11 @@
 //States
 enum class MasterState { //TODO: change as needed
     IDLE,
-    DRV_IR,
+    START,
     DRV_TAPE_NORM,
-    DRV_TAPE_BRIDGE,
     DRV_TAPE_DOWN,
     SHRP_TURN,
-    OTHR_RBT,
-    DRP_BAN,
+    AFTER_ARCH,
     DONE
 };
 
@@ -39,12 +37,13 @@ class Master {
          * @param steeringServo a pointer to the steering servo that will be used.
         */
         Master(Reflectors* refl, Motor* leftMotor, Motor* rightMotor, MyServo* steeringServo) : 
-                preMarker(false), prePreMarker(false), 
+                bridgeMarker(false), preMarker(false), 
                 secondMarker(0), reflectors(refl), 
                 tapeFollow(refl, leftMotor, rightMotor, steeringServo),
                 leftMotor(leftMotor), rightMotor(rightMotor),
                 steeringServo(steeringServo),
-                sonar(SonarNS::ECHO, SonarNS::TRIG) {};
+                sonar(SonarNS::ECHO, SonarNS::TRIG),
+                sonarTimer(0) {};
 
         /**
          * masterstate pole
@@ -96,9 +95,9 @@ class Master {
         IR ir;
         PID tapeFollow;
 
-        unsigned long rampTimer, bridgeTimer, shrpTimer;
+        unsigned long rampTimer, bridgeTimer, shrpTimer, sonarTimer, time;
 
-        bool preMarker, prePreMarker;
+        bool bridgeMarker, preMarker;
         int secondMarker;
 
         bool stopped;

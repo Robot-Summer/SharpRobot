@@ -40,8 +40,6 @@ namespace PickerUpServoNS{
     static const PinName LEFT_SERVO_PIN = PA_1;
 }
 
-
-//Reflectance Sensors Name Space
 namespace PIDNS {
     // PID Constants
     // Motor speed = 190 and freq = 1000
@@ -63,10 +61,6 @@ namespace SonarNS {
 }
 
 namespace ReflectorsNS {
-    // const int LEFT_SENSOR_ONE = PB0;
-    // const int LEFT_SENSOR_TWO = PB1;
-    // const int RIGHT_SENSOR_ONE = PA5;
-    // const int RIGHT_SENSOR_TWO = PA4;
 
     const int LEFT_SENSOR_ONE = PA5;
     const int LEFT_SENSOR_TWO = PA4;
@@ -87,12 +81,12 @@ namespace GyroscopeNS {
 
 namespace TimerNS {
     const int RAMP_TIMER = 4000;
+    const int SONAR_TIMER = 500;
+    const int SHRP_TIMER = 1000;
 }
 
 //IR sensor Name Space
 namespace IRNS {
-    //TODO: Tune the IR to read as best as possible
-
     const int KHZ_WAVE_PIN = PA3;
 
     const int CORROLATED_WAVE_THRESHOLD = .05; //corrolation threshold

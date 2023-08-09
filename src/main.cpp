@@ -23,7 +23,7 @@ Master state(&myReflectors, &leftMotor, &rightMotor, &steeringServo);
 
 void setup() {
     Serial3.begin(9600);
-    state.setState(MasterState::DRV_TAPE_NORM);
+    state.setState(MasterState::START);
     pinMode(PC13, OUTPUT);
     digitalWrite(PC13, HIGH);
 }

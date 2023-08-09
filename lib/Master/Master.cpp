@@ -28,9 +28,12 @@ MasterState Master::poll() {
             
             break;
 
-        
+        case MasterState::START:
 
-        case MasterState::DRV_TAPE_NORM: 
+            goToState(MasterState::DRV_TAPE_NORM);
+            break;
+
+        case MasterState::DRV_TAPE_NORM:
 
             tapeFollow.usePID(MotorNS::MAX_SPEED);
 
@@ -39,23 +42,21 @@ MasterState Master::poll() {
                 digitalWrite(PC13, LOW);
             }
 
-            // reflectors -> printValues();
-
-            // //i need to check if the prePreMarker is false and then if the preMarker is true and then if the current marker is true
-            // if (!preMarker) { //checks if robot was previously previously on a marker
-            //     if (reflectors -> bridgeMarker()) { //checks if the robot is currently on a marker      
-            //         digitalWrite(PC13, !digitalRead(PC13));
-            //         if (secondMarker == 3) { //checks if robot has crossed the bridge
-            //             goToState(MasterState::DRV_TAPE_DOWN);
-            //             secondMarker = 0;
-            //             rampTimer = millis();
-            //         } else {
-            //             secondMarker++;
-            //         }
-            //     }
-            // }
-
-            // preMarker = reflectors -> bridgeMarker();
+            if (millis() - sonarTimer >= TimerNS::SONAR_TIMER) { //limits the sonar to check only every half a second (sonar is slow to take a reading)
+                if (!preMarker) { //checks if robot has previously on under something
+                    if (sonar.getDistance() < 25) { //checks if the robot is currently under something (bridge or arch)      
+                        if (bridgeMarker) { //checks if robot has crossed the bridge
+                            goToState(MasterState::AFTER_ARCH);
+                            bridgeMarker = false;
+                            rampTimer = millis();
+                        } else {
+                            bridgeMarker = true;
+                        }
+                    }
+                }
+                sonarTimer = millis();
+            }
+            
             break;
 
         case MasterState::DRV_TAPE_DOWN:
@@ -67,22 +68,35 @@ MasterState Master::poll() {
                 digitalWrite(PC13, HIGH);
             }
 
-            // if (millis() - rampTimer >= TimerNS::RAMP_TIMER) {
-            //     goToState(MasterState::DRV_TAPE_NORM);
-            // }
-
             break;
 
         case MasterState::SHRP_TURN:
+            steeringServo -> write(ServoNS::MAX_ANGLE);
+
+            leftMotor -> speed((MotorNS::MAX_SPEED  + 20));
+            rightMotor -> stop();
+            
+            if (millis() - shrpTimer >= TimerNS::SHRP_TIMER) {
+                goToState(MasterState::DRV_TAPE_NORM);
+            }
+
+            break;
+
+        case MasterState::AFTER_ARCH:
+            steeringServo -> write(ServoNS::MIN_ANGLE);
+
+            leftMotor -> speed(-MotorNS::MAX_SPEED);
+            rightMotor -> speed(MotorNS::MAX_SPEED);
+
+            delay(500);
+
+            steeringServo -> write(ServoNS::INITIAL_ANGLE);
+
+            leftMotor -> speed(MotorNS::MAX_SPEED);
+            rightMotor -> speed(MotorNS::MAX_SPEED);
+
             goToState(MasterState::DRV_TAPE_NORM);
-            break;
 
-        case MasterState::OTHR_RBT:
-            //TODO: add the code for when ir is sampling
-            break;
-
-        case MasterState::DRP_BAN:
-            //TODO: add the code for when ir is sampling
             break;
 
         case MasterState::DONE:                

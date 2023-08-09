@@ -10,10 +10,8 @@ Sonar::Sonar(int sonarEcho, int sonarTrig) : sonarEcho(sonarEcho), sonarTrig(son
 int Sonar::getDistance() {
     int distance;
 
-    digitalWrite(sonarTrig, LOW);  
-    delayMicroseconds(5);  
+    digitalWrite(sonarTrig, LOW);    
     digitalWrite(sonarTrig, HIGH);   
-    delayMicroseconds(10);  
     digitalWrite(sonarEcho, LOW);  
 
     distance = (pulseIn(sonarEcho, HIGH) / 2) / 29.1;
