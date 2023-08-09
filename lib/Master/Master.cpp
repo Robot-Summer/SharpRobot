@@ -37,10 +37,10 @@ MasterState Master::poll() {
 
             tapeFollow.usePID(MotorNS::MAX_SPEED);
 
-            if (tiltSensor.readTiltSensor()){
-                goToState(MasterState::DRV_TAPE_DOWN);
-                digitalWrite(PC13, LOW);
-            }
+            // if (tiltSensor.readTiltSensor()){
+            //     goToState(MasterState::DRV_TAPE_DOWN);
+            //     digitalWrite(PC13, LOW);
+            // }
 
             if (millis() - sonarTimer >= TimerNS::SONAR_TIMER) { //limits the sonar to check only every half a second (sonar is slow to take a reading)
                 if (!preMarker) { //checks if robot has previously on under something
