@@ -15,7 +15,7 @@ namespace MotorNS {
 
     const int MOTOR_FREQ = 100;
 
-    const int MAX_SPEED = 100;
+    const int MAX_SPEED = 110;
 
 }
 

@@ -28,7 +28,7 @@ PID::PID() :
 
 int PID::getCurrentState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState, int lastError) {
     int state = 0;
-  
+    digitalWrite(PC13, HIGH);
     if (rightSensor1 == 1 && leftSensor1 == 1) {
         state = 0;
     } 
@@ -64,16 +64,16 @@ int PID::getCurrentState(int leftSensor2, int leftSensor1, int rightSensor1, int
         //state = lastState;
         if (lastState > 0) {
             state = 4;
-            // digitalWrite(PC13, HIGH);
+            digitalWrite(PC13, LOW);
         } else if (lastState < 0) {
             state = -4;
-            // digitalWrite(PC13, LOW);
+            digitalWrite(PC13, LOW);
         } else if (lastError > 0) {
             state = -4;
-            // digitalWrite(PC13, LOW);
+            digitalWrite(PC13, LOW);
         } else if (lastError < 0) {
             state = 4;
-            // digitalWrite(PC13, HIGH);
+            digitalWrite(PC13, LOW);
         }
     
     }
@@ -102,7 +102,7 @@ int PID::getDigital(int value, int previousDigital) {
         }
     }
     else {
-        if (value > 320) {
+        if (value > 350) {
             return 1;
         }
         else {
@@ -142,7 +142,7 @@ void PID::usePID() {
         timeInPrev = timeInCurrent;  
         timeInCurrent = 0;
         lastError = lastState;
-        digitalWrite(PC13, !digitalRead(PC13));
+        // digitalWrite(PC13, !digitalRead(PC13));
     }   
     timeInCurrent++;
 

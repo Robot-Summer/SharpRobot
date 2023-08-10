@@ -14,6 +14,13 @@ class PID {
         PID();
 
         /**
+         * writes the angle of the servo
+         * 
+         * @param angle the angle we want the servo to turn. 
+        */
+        void writeServoAngle(int angle);
+
+        /**
          * usePID makes the servos turn
          * 
         */
@@ -52,12 +59,7 @@ class PID {
         */
         int getDigital(int value, int previousDigital);
 
-        /**
-         * writes the angle of the servo
-         * 
-         * @param angle the angle we want the servo to turn. 
-        */
-        void writeServoAngle(int angle);
+        
 
         // class inits and other variables.
 

@@ -42,6 +42,8 @@
                 //TODO: add the code for when ir is sampling
 
                 advanceState();
+
+                
                 break;
 
             case MasterState::OTHR_RBT:
