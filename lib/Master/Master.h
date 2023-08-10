@@ -15,14 +15,10 @@
 
 //States
 enum class MasterState { //TODO: change as needed
-    IDLE,
-    DRV_IR,
+    START_LEFT,
+    START_RIGHT,
     DRV_TAPE_NORM,
-    DRV_TAPE_BRIDGE,
     DRV_TAPE_DOWN,
-    SHRP_TURN,
-    OTHR_RBT,
-    DRP_BAN,
     DONE
 };
 
@@ -88,8 +84,8 @@ class Master {
         Motor* rightMotor;
         MyServo* steeringServo;
 
+        TiltSensor tiltSensor;
 
-        IR ir;
         PID tapeFollow;
 
         unsigned long rampTimer, bridgeTimer, shrpTimer;

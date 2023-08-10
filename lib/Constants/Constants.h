@@ -15,7 +15,7 @@ namespace MotorNS {
 
     const int MOTOR_FREQ = 100;
 
-    const int MAX_SPEED = 110;
+    const int MAX_SPEED = 130;
 
     const int DOWN_RAMP_SPEED = 60;
 
@@ -43,12 +43,6 @@ namespace PickerUpServoNS{
 
 //Reflectance Sensors Name Space
 namespace PIDNS {
-    // PID Constants
-    // Motor speed = 190 and freq = 1000
-    // const float KP = 6;
-    // const float KD = 0;  
-    // const float KI = 0.001;
-
     const float KP = 6;
     const float KD = 1.0;  
     const float KI = 0.001; 

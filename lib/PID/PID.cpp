@@ -55,16 +55,6 @@ int PID::getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int r
         } 
     }
 
-    // Serial3.print(leftSensor2);
-    // Serial3.print("  ,");
-    // Serial3.print(leftSensor1);
-    // Serial3.print("  ,");
-    // Serial3.print(rightSensor1);
-    // Serial3.print("  ,");
-    // Serial3.print(rightSensor2);
-    // Serial3.print("  ,");
-    // Serial3.println(state);
-
     return state;
 }
 
@@ -104,19 +94,15 @@ void PID::usePID(int speed) {
     float scalingFactor = 1;
 
     if (currentState == 8) {
-        leftMotor -> speed((speed+50));
-        rightMotor -> speed(-(speed+50));
+        leftMotor -> speed((speed + 30));
+        rightMotor -> speed(-(speed + 30));
     }
     else if (currentState == -8 ) {
-        leftMotor -> speed(-(speed+50));
-        rightMotor -> speed((speed+50)); 
-        // pinMode(PC13, OUTPUT);
-        // digitalWrite(PC13, LOW);
+        leftMotor -> speed(-(speed + 30));
+        rightMotor -> speed((speed + 30)); 
     }
     else {
-        // pinMode(PC13, OUTPUT);
-        // digitalWrite(PC13, HIGH);
-        leftMotor -> speed(speed+scalingFactor*adjustment);
-        rightMotor -> speed(speed-scalingFactor*adjustment);
+        leftMotor -> speed(speed + scalingFactor * adjustment);
+        rightMotor -> speed(speed - scalingFactor * adjustment);
     }
 }

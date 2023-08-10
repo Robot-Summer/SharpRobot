@@ -17,6 +17,8 @@ class TiltSensor {
      * Reads the state of the tilt sensor. 
      * 
      * Gives HIGH if the tiltSensor is triggered (Robot moving down the ramp) and LOW otherwise.
+     * 
+     * @return the state of the tilt sensor.
     */
     bool readTiltSensor();
 
