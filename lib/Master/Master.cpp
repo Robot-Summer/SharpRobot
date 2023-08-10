@@ -13,42 +13,56 @@ MasterState Master::poll() {
     
     switch(currentState){
         case MasterState::START_LEFT:
+            steeringServo -> write(ServoNS::INITIAL_ANGLE);
+            leftMotor -> speed(MotorNS::MAX_SPEED);
+            rightMotor -> speed(MotorNS::MAX_SPEED);
+            delay(500);
+            leftMotor -> stop();
+            rightMotor -> stop();
+            steeringServo -> write(60);
+            leftMotor -> speed(-MotorNS::MAX_SPEED);
+            rightMotor -> speed(MotorNS::MAX_SPEED);
+            delay(525);
+            leftMotor -> stop();
+            rightMotor -> stop();
+            steeringServo -> write(ServoNS::INITIAL_ANGLE);
+            leftMotor -> speed(MotorNS::MAX_SPEED);
+            rightMotor -> speed(MotorNS::MAX_SPEED);
+            delay(500);
+
             goToState(MasterState::DRV_TAPE_NORM);
             break;
 
         case MasterState::START_RIGHT:
+
+            steeringServo -> write(ServoNS::INITIAL_ANGLE);
+            leftMotor -> speed(MotorNS::MAX_SPEED);
+            rightMotor -> speed(MotorNS::MAX_SPEED);
+            delay(500);
+
+
             goToState(MasterState::DRV_TAPE_NORM);
             break;        
 
-        case MasterState::DRV_TAPE_NORM: 
+        case MasterState::DRV_TAPE_NORM:
 
             tapeFollow.usePID(MotorNS::MAX_SPEED);
-
-            // if (tiltSensor.readTiltSensor()){
-            //     goToState(MasterState::DRV_TAPE_DOWN);
-            //     digitalWrite(PC13, HIGH);
-            // }
-
-            if (reflectors -> bridgeMarker()) {
-                goToState(MasterState::DRV_TAPE_DOWN);
-                rampTimer = millis();
-                digitalWrite(PC13, LOW);
-            }
 
             break;
 
         case MasterState::DRV_TAPE_DOWN:
             
             tapeFollow.usePID(MotorNS::DOWN_RAMP_SPEED);
+            
 
-            // if (!tiltSensor.readTiltSensor()){
-            //     goToState(MasterState::DRV_TAPE_NORM);
-            //     digitalWrite(PC13, LOW);
-            // }
-
-            if (millis() - rampTimer >= TimerNS::RAMP_TIMER) {
-                goToState(MasterState::DRV_TAPE_NORM);
-                digitalWrite(PC13, HIGH);
+            if (!tiltSensor.readTiltSensor()){
+                tiltCount++;
+                if (true){
+                    goToState(MasterState::DRV_TAPE_DOWN);
+                    digitalWrite(PC13, LOW);
+                }
+            } else {
+                tiltCount = 0;
             }
 
             break;

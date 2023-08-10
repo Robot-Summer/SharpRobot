@@ -39,7 +39,8 @@ class Master {
                 secondMarker(0), reflectors(refl), 
                 tapeFollow(refl, leftMotor, rightMotor, steeringServo),
                 leftMotor(leftMotor), rightMotor(rightMotor),
-                steeringServo(steeringServo) {};
+                steeringServo(steeringServo), 
+                tiltCount(0) {};
 
         /**
          * masterstate pole
@@ -93,6 +94,8 @@ class Master {
 
         bool preMarker, prePreMarker;
         int secondMarker;
+
+        int tiltCount;
 
         bool stopped;
 

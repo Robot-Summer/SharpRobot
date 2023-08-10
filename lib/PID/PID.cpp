@@ -104,18 +104,16 @@ void PID::usePID(int speed) {
 
     lastState = currentState;
 
-    float scalingFactor = 1;
-
     if (currentState == 4) {
-        leftMotor -> speed((speed + 60));
-        rightMotor -> speed(-(speed + 60));
+        leftMotor -> speed((speed + 45));
+        rightMotor -> speed(-(speed + 45));
     }
     else if (currentState == -4 ) {
-        leftMotor -> speed(-(speed + 60));
-        rightMotor -> speed((speed + 60)); 
+        leftMotor -> speed(-(speed + 45));
+        rightMotor -> speed((speed + 45)); 
     }
     else {
-        leftMotor -> speed(speed + scalingFactor * adjustment/2);
-        rightMotor -> speed(speed - scalingFactor * adjustment/2);
+        leftMotor -> speed(speed + adjustment / 2);
+        rightMotor -> speed(speed - adjustment / 2);
     }
 }
