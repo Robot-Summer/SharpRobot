@@ -32,7 +32,7 @@ class PID {
          * 
          * @return an integer value representing the state of the system
         */
-        int getCurrentState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState);
+        int getCurrentState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState, int lastError);
 
         /**
          * limits the angle of the servo based on the geometry of the chasis so that it does not stall
@@ -50,7 +50,7 @@ class PID {
          * 
          * @return an integer of either 0 or 1. 0 if the value is equal to or below the specified threshold in constants or 1 if above. 
         */
-        int getDigital(int value);
+        int getDigital(int value, int previousDigital);
 
         /**
          * writes the angle of the servo

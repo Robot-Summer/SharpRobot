@@ -8,14 +8,14 @@
 //Motors Name Space
 namespace MotorNS {
 
-    static const PinName RIGHT_MOTOR_FWD = PA_10;
-    static const PinName RIGHT_MOTOR_BWD = PA_11;
-    static const PinName LEFT_MOTOR_FWD = PA_8;
-    static const PinName LEFT_MOTOR_BWD = PA_9;
+    static const PinName RIGHT_MOTOR_FWD = PA_8;
+    static const PinName RIGHT_MOTOR_BWD = PA_9;
+    static const PinName LEFT_MOTOR_FWD = PA_11;
+    static const PinName LEFT_MOTOR_BWD = PA_10;
 
-    const int MOTOR_FREQ = 500;
+    const int MOTOR_FREQ = 100;
 
-    const int MAX_SPEED = 190;
+    const int MAX_SPEED = 100;
 
 }
 
@@ -23,8 +23,8 @@ namespace MotorNS {
 //Reflectance Sensors Name Space
 namespace PIDNS {
     // Servo Constants
-    const int MAX_ANGLE = 138;
-    const int MIN_ANGLE = 52;
+    const int MAX_ANGLE = 135;
+    const int MIN_ANGLE = 55;
     const int INITIAL_ANGLE = 95;
     static const PinName SERVO_PIN = PA_0;
 
@@ -33,7 +33,7 @@ namespace PIDNS {
     const float KD = 0.5;  
     const float KI = 0.001; 
 
-    const int DIGITAL_THRESHOLD = 185;
+    const int DIGITAL_THRESHOLD = 300;
 
 
     // Reflectance sensors PINS
