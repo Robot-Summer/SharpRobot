@@ -13,6 +13,28 @@ MasterState Master::poll() {
     
     switch(currentState){
         case MasterState::START_LEFT:
+            steeringServo -> write(ServoNS::INITIAL_ANGLE);
+            leftMotor -> speed(MotorNS::MAX_SPEED);
+            rightMotor -> speed(MotorNS::MAX_SPEED);
+            delay(550);
+            leftMotor -> stop();
+            rightMotor -> stop();
+            steeringServo -> write(ServoNS::MIN_ANGLE);
+            leftMotor -> speed(-MotorNS::MAX_SPEED);
+            rightMotor -> speed(MotorNS::MAX_SPEED);
+            delay(620);
+            leftMotor -> stop();
+            rightMotor -> stop();
+            steeringServo -> write(ServoNS::INITIAL_ANGLE);
+            leftMotor -> speed(MotorNS::MAX_SPEED);
+            rightMotor -> speed(MotorNS::MAX_SPEED);
+            delay(1000);
+            // leftMotor -> stop();
+            // rightMotor -> stop();
+            // // delay(5000);
+
+
+
             goToState(MasterState::DRV_TAPE_NORM);
             break;
 
@@ -29,11 +51,11 @@ MasterState Master::poll() {
             //     digitalWrite(PC13, HIGH);
             // }
 
-            if (reflectors -> bridgeMarker()) {
-                goToState(MasterState::DRV_TAPE_DOWN);
-                rampTimer = millis();
-                digitalWrite(PC13, LOW);
-            }
+            // if (reflectors -> bridgeMarker()) {
+            //     goToState(MasterState::DRV_TAPE_DOWN);
+            //     rampTimer = millis();
+            //     digitalWrite(PC13, LOW);
+            // }
 
             break;
 

@@ -29,12 +29,8 @@ Master state(&myReflectors, &leftMotor, &rightMotor, &steeringServo);
 
 void setup() {
     Serial3.begin(9600);
-    state.setState(MasterState::DRV_TAPE_NORM);
-
+    state.setState(MasterState::START_LEFT);
     pinMode(PC13, OUTPUT);
-    pinMode(PB4, INPUT);
-    pinMode(PA_8, OUTPUT);
-    digitalWrite(PC13, HIGH);
 
     // steeringServo.write(ServoNS::INITIAL_ANGLE);
     // pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, 150, RESOLUTION_8B_COMPARE_FORMAT);
