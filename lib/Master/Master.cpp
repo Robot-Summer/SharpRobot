@@ -26,7 +26,14 @@ MasterState Master::poll() {
 
             // if (tiltSensor.readTiltSensor()){
             //     goToState(MasterState::DRV_TAPE_DOWN);
+            //     digitalWrite(PC13, HIGH);
             // }
+
+            if (reflectors -> bridgeMarker()) {
+                goToState(MasterState::DRV_TAPE_DOWN);
+                rampTimer = millis();
+                digitalWrite(PC13, LOW);
+            }
 
             break;
 
@@ -34,13 +41,15 @@ MasterState Master::poll() {
             
             tapeFollow.usePID(MotorNS::DOWN_RAMP_SPEED);
 
-            if (!tiltSensor.readTiltSensor()){
-                goToState(MasterState::DRV_TAPE_NORM);
-            }
-
-            // if (millis() - rampTimer >= TimerNS::RAMP_TIMER) {
+            // if (!tiltSensor.readTiltSensor()){
             //     goToState(MasterState::DRV_TAPE_NORM);
+            //     digitalWrite(PC13, LOW);
             // }
+
+            if (millis() - rampTimer >= TimerNS::RAMP_TIMER) {
+                goToState(MasterState::DRV_TAPE_NORM);
+                digitalWrite(PC13, HIGH);
+            }
 
             break;
 

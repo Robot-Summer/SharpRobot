@@ -40,7 +40,7 @@ class PID {
          * 
          * @return an integer value representing the state of the system
         */
-        int getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState);
+        int getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState, int lastError);
 
         /**
          * limits the angle of the servo based on the geometry of the chasis so that it does not stall

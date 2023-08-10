@@ -23,32 +23,22 @@ Motor leftMotor(MotorNS::LEFT_MOTOR_FWD, MotorNS::LEFT_MOTOR_BWD);
 Motor rightMotor(MotorNS::RIGHT_MOTOR_FWD, MotorNS::RIGHT_MOTOR_BWD);
 
 MyServo steeringServo(ServoNS::SERVO_PIN, ServoNS::MIN_ANGLE, ServoNS::MAX_ANGLE, ServoNS::INITIAL_ANGLE);
-// MyServo pickerUpServo(PickerUpServoNS::LEFT_SERVO_PIN, PickerUpServoNS::MIN_ANGLE, PickerUpServoNS::MAX_ANGLE, PickerUpServoNS::INITIAL_ANGLE);
 
 Master state(&myReflectors, &leftMotor, &rightMotor, &steeringServo);
 
 
 void setup() {
-
-    // display_handler.begin(SSD1306_SWITCHCAPVCC, 0x3C);
- 
-    // Displays Adafruit logo by default. call clearDisplay immediately if you don't want this.
-    // display_handler.display();
-    // delay(2000);
-
-    // display_handler.clearDisplay();
-    // display_handler.setTextSize(1);
-    // display_handler.setTextColor(SSD1306_WHITE);
-    // display_handler.setCursor(0,0);
-    // display_handler.println("hello world");
-    // display_handler.display();
-
     Serial3.begin(9600);
     state.setState(MasterState::DRV_TAPE_NORM);
+
     pinMode(PC13, OUTPUT);
     pinMode(PB4, INPUT);
     pinMode(PA_8, OUTPUT);
     digitalWrite(PC13, HIGH);
+
+    // steeringServo.write(ServoNS::INITIAL_ANGLE);
+    // pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, 150, RESOLUTION_8B_COMPARE_FORMAT);
+    // pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, 150, RESOLUTION_8B_COMPARE_FORMAT);
 }
 
 void loop() {

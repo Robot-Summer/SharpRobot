@@ -19,40 +19,53 @@ PID::PID(Reflectors* sensors, Motor* leftMotor, Motor* rightMotor, MyServo* stee
     rightMotor(rightMotor),
     steeringServo(steeringServo) {}
 
-int PID::getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState) {
+int PID::getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState, int lastError) {
     int state = 0;
-  
+    // digitalWrite(PC13, HIGH);
     if (rightSensor1 == 1 && leftSensor1 == 1) {
         state = 0;
     } else if (rightSensor1 == 1) {
         if (rightSensor2 == 0) {
             state = 1;
         } else if (rightSensor2 == 1) {
-            state = 4;
-            // state = 2;
+            // state = 4;
+            state = 2;
         }
     } else if (leftSensor1 == 1) {
         if (leftSensor2 == 0) {
             state = -1;
         } else if (leftSensor2 == 1) {
-            state = -4;
-            // state = -2;
+            // state = -4;
+            state = -2;
         }
     } else if (rightSensor2 == 1) {
-        state = 6;
-        // state = 3;
+        // state = 6;
+        state = 3;
     } else if (leftSensor2 == 1) {
-        state = -6;
-        // state = -3;
+        // state = -6;
+        state = -3;
     } else {
         //state = lastState;
         if (lastState > 0) {
-            state = 8;
-            // state = 4;
+            // state = 8;
+            state = 4;
+            // digitalWrite(PC13, LOW);
         } else if (lastState < 0) {
-            state = -8;
-            // state = -4;
+            // state = -8;
+            state = -4;
+            // digitalWrite(PC13, LOW);
         } 
+        else if (lastError > 0) {
+            state = -4;
+            // digitalWrite(PC13, LOW);
+        }
+        else if (lastError < 0) {
+            state = 4;
+            // digitalWrite(PC13, LOW);
+        }
+        else {
+            state = 0;
+        }
     }
 
     return state;
@@ -62,7 +75,7 @@ void PID::usePID(int speed) {
 
     // Get Line position (positive => drifiting right ; negative => drifiting left)
     int currentState = getTotalState(reflectors -> getReflectorValue(0), reflectors -> getReflectorValue(1), 
-                                        reflectors -> getReflectorValue(2), reflectors -> getReflectorValue(3), lastState);
+                                        reflectors -> getReflectorValue(2), reflectors -> getReflectorValue(3), lastState, lastError);
 
     // reflectors.printValues();
 
@@ -93,16 +106,16 @@ void PID::usePID(int speed) {
 
     float scalingFactor = 1;
 
-    if (currentState == 8) {
-        leftMotor -> speed((speed + 30));
-        rightMotor -> speed(-(speed + 30));
+    if (currentState == 4) {
+        leftMotor -> speed((speed + 60));
+        rightMotor -> speed(-(speed + 60));
     }
-    else if (currentState == -8 ) {
-        leftMotor -> speed(-(speed + 30));
-        rightMotor -> speed((speed + 30)); 
+    else if (currentState == -4 ) {
+        leftMotor -> speed(-(speed + 60));
+        rightMotor -> speed((speed + 60)); 
     }
     else {
-        leftMotor -> speed(speed + scalingFactor * adjustment);
-        rightMotor -> speed(speed - scalingFactor * adjustment);
+        leftMotor -> speed(speed + scalingFactor * adjustment/2);
+        rightMotor -> speed(speed - scalingFactor * adjustment/2);
     }
 }

@@ -15,7 +15,7 @@ namespace MotorNS {
 
     const int MOTOR_FREQ = 100;
 
-    const int MAX_SPEED = 130;
+    const int MAX_SPEED = 140;
 
     const int DOWN_RAMP_SPEED = 60;
 
@@ -43,8 +43,8 @@ namespace PickerUpServoNS{
 
 //Reflectance Sensors Name Space
 namespace PIDNS {
-    const float KP = 6;
-    const float KD = 1.0;  
+    const float KP = 12;
+    const float KD = 0.5;  
     const float KI = 0.001; 
 
 
@@ -56,8 +56,8 @@ namespace ReflectorsNS {
     const int RIGHT_SENSOR_ONE = PA5;
     const int RIGHT_SENSOR_TWO = PA4;
 
-    const int DIGITAL_THRESHOLD_HIGH = 300;
-    const int DIGITAL_THRESHOLD_LOW = 150;
+    const int DIGITAL_THRESHOLD_HIGH = 330;
+    const int DIGITAL_THRESHOLD_LOW = 120;
 
 }
 
@@ -70,7 +70,7 @@ namespace GyroscopeNS {
 }
 
 namespace TimerNS {
-    const int RAMP_TIMER = 4000;
+    const int RAMP_TIMER = 3000;
 }
 
 //IR sensor Name Space

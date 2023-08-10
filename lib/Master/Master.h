@@ -11,6 +11,7 @@
 #include <Motor.h>
 #include <Constants.h>
 #include <ReflectorSensors.h>
+#include <TiltSensor.h>
 #include <MyServo.h>
 
 //States
