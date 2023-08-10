@@ -94,7 +94,7 @@ int PID::limitAngle(int angle) {
 
 int PID::getDigital(int value, int previousDigital) {
     if (previousDigital == 1) {
-        if (value < 150) {
+        if (value < 120) {
             return 0;
         }
         else {
@@ -102,7 +102,7 @@ int PID::getDigital(int value, int previousDigital) {
         }
     }
     else {
-        if (value > 300) {
+        if (value > 320) {
             return 1;
         }
         else {
@@ -177,14 +177,14 @@ void PID::usePID() {
     if (currentState == 4) {
         pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
         pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED + 30, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED + 30, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED + 50, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED + 50, RESOLUTION_8B_COMPARE_FORMAT);
     }
     else if (currentState == -4 ) {
         pwm_start(MotorNS::LEFT_MOTOR_FWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
         pwm_start(MotorNS::RIGHT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED + 30, RESOLUTION_8B_COMPARE_FORMAT);
-        pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED + 30, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::RIGHT_MOTOR_FWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED + 50, RESOLUTION_8B_COMPARE_FORMAT);
+        pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, MotorNS::MAX_SPEED + 50, RESOLUTION_8B_COMPARE_FORMAT);
     }
     else {
         pwm_start(MotorNS::LEFT_MOTOR_BWD, MotorNS::MOTOR_FREQ, 0, RESOLUTION_8B_COMPARE_FORMAT);
