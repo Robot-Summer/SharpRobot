@@ -8,14 +8,14 @@
 //Motors Name Space
 namespace MotorNS {
 
-    static const PinName RIGHT_MOTOR_FWD = PA_10;
-    static const PinName RIGHT_MOTOR_BWD = PA_11;
-    static const PinName LEFT_MOTOR_FWD = PA_9;
-    static const PinName LEFT_MOTOR_BWD = PA_8;
+    static const PinName RIGHT_MOTOR_FWD = PA_8;
+    static const PinName RIGHT_MOTOR_BWD = PA_9;
+    static const PinName LEFT_MOTOR_FWD = PA_11;
+    static const PinName LEFT_MOTOR_BWD = PA_10;
 
     const int MOTOR_FREQ = 100;
 
-    const int MAX_SPEED = 140;
+    const int MAX_SPEED = 110;
 
     const int DOWN_RAMP_SPEED = 60;
 
@@ -49,7 +49,7 @@ namespace PIDNS {
     // const float KD = 0;  
     // const float KI = 0.001;
 
-    const float KP = 12;
+    const float KP = 6;
     const float KD = 1.0;  
     const float KI = 0.001; 
 
@@ -57,17 +57,13 @@ namespace PIDNS {
 }
 
 namespace ReflectorsNS {
-    // const int LEFT_SENSOR_ONE = PB0;
-    // const int LEFT_SENSOR_TWO = PB1;
-    // const int RIGHT_SENSOR_ONE = PA5;
-    // const int RIGHT_SENSOR_TWO = PA4;
+    const int LEFT_SENSOR_ONE = PB0;
+    const int LEFT_SENSOR_TWO = PB1;
+    const int RIGHT_SENSOR_ONE = PA5;
+    const int RIGHT_SENSOR_TWO = PA4;
 
-    const int LEFT_SENSOR_ONE = PA5;
-    const int LEFT_SENSOR_TWO = PA4;
-    const int RIGHT_SENSOR_ONE = PB0;
-    const int RIGHT_SENSOR_TWO = PB1;
-
-    const int DIGITAL_THRESHOLD = 185;
+    const int DIGITAL_THRESHOLD_HIGH = 300;
+    const int DIGITAL_THRESHOLD_LOW = 150;
 
 }
 
