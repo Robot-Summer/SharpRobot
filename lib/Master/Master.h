@@ -85,7 +85,7 @@ class Master {
         Motor* rightMotor;
         MyServo* steeringServo;
 
-        TiltSensor tiltSensor;
+        // TiltSensor tiltSensor;
 
         PID tapeFollow;
 

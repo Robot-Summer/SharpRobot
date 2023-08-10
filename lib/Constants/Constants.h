@@ -15,7 +15,7 @@ namespace MotorNS {
 
     const int MOTOR_FREQ = 100;
 
-    const int MAX_SPEED = 140;
+    const int MAX_SPEED = 160;
 
     const int DOWN_RAMP_SPEED = 60;
 
@@ -70,7 +70,7 @@ namespace GyroscopeNS {
 }
 
 namespace TimerNS {
-    const int RAMP_TIMER = 3000;
+    const int RAMP_TIMER = 11000;
 }
 
 //IR sensor Name Space

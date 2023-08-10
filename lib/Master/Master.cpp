@@ -13,6 +13,7 @@ MasterState Master::poll() {
     
     switch(currentState){
         case MasterState::START_LEFT:
+            rampTimer = millis();
             steeringServo -> write(ServoNS::INITIAL_ANGLE);
             leftMotor -> speed(MotorNS::MAX_SPEED);
             rightMotor -> speed(MotorNS::MAX_SPEED);
@@ -54,6 +55,10 @@ MasterState Master::poll() {
             // if (reflectors -> bridgeMarker()) {
             //     goToState(MasterState::DRV_TAPE_DOWN);
             //     rampTimer = millis();
+            //     digitalWrite(PC13, LOW);
+            // }
+
+            // if (millis() - rampTimer >= TimerNS::RAMP_TIMER) {
             //     digitalWrite(PC13, LOW);
             // }
 

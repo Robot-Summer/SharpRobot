@@ -21,7 +21,7 @@ PID::PID(Reflectors* sensors, Motor* leftMotor, Motor* rightMotor, MyServo* stee
 
 int PID::getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int rightSensor2, int lastState, int lastError) {
     int state = 0;
-    // digitalWrite(PC13, HIGH);
+    digitalWrite(PC13, HIGH);
     if (rightSensor1 == 1 && leftSensor1 == 1) {
         state = 0;
     } else if (rightSensor1 == 1) {
@@ -57,11 +57,11 @@ int PID::getTotalState(int leftSensor2, int leftSensor1, int rightSensor1, int r
         } 
         else if (lastError > 0) {
             state = -4;
-            // digitalWrite(PC13, LOW);
+            digitalWrite(PC13, LOW);
         }
         else if (lastError < 0) {
             state = 4;
-            // digitalWrite(PC13, LOW);
+            digitalWrite(PC13, LOW);
         }
         else {
             state = 0;
@@ -107,12 +107,12 @@ void PID::usePID(int speed) {
     float scalingFactor = 1;
 
     if (currentState == 4) {
-        leftMotor -> speed((speed + 50));
-        rightMotor -> speed(-(speed + 50));
+        leftMotor -> speed((speed + 45));
+        rightMotor -> speed(-(speed + 45));
     }
     else if (currentState == -4 ) {
-        leftMotor -> speed(-(speed + 50));
-        rightMotor -> speed((speed + 50)); 
+        leftMotor -> speed(-(speed + 45));
+        rightMotor -> speed((speed + 45)); 
     }
     else {
         leftMotor -> speed(speed + scalingFactor * adjustment/2);
