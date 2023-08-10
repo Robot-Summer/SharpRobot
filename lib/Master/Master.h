@@ -42,8 +42,7 @@ class Master {
                 tapeFollow(refl, leftMotor, rightMotor, steeringServo),
                 leftMotor(leftMotor), rightMotor(rightMotor),
                 steeringServo(steeringServo),
-                sonar(SonarNS::ECHO, SonarNS::TRIG),
-                sonarTimer(0) {};
+                sonar(SonarNS::ECHO, SonarNS::TRIG) {};
 
         /**
          * masterstate pole
@@ -95,7 +94,7 @@ class Master {
         IR ir;
         PID tapeFollow;
 
-        unsigned long rampTimer, bridgeTimer, shrpTimer, sonarTimer, time;
+        unsigned long rampTimer, tiltTimer, shrpTimer, sonarTimer, time;
 
         bool bridgeMarker, preMarker;
         int secondMarker;

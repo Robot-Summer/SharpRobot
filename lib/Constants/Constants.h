@@ -83,6 +83,7 @@ namespace TimerNS {
     const int RAMP_TIMER = 4000;
     const int SONAR_TIMER = 500;
     const int SHRP_TIMER = 1000;
+    const int TILT_TIMER = 400;
 }
 
 //IR sensor Name Space
