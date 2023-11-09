@@ -8,7 +8,8 @@ Our race robot earned first place in the annual UBC Engineering Physics Summer R
 ## Project Description
 To learn more about the project, visit https://projectlab.engphys.ubc.ca/enph-253-2023/. You can also visit our webpage for our team's robot, outlining our approach and timeline of our production at https://www.enph253-sharp.com/
 ## Team Sharp
-Mahdi Shakouri - Felipe Garavelli - Sasan Ghasaei - William Gibbs
+William Gibbs - Mahdi Shakouri - Felipe Garavelli - Sasan Ghasaei
 
 
+![image](https://github.com/Robot-Summer/SharpRobot/assets/112781497/830e224c-dc7e-4263-9fdd-5aa6d06369b8)
 
